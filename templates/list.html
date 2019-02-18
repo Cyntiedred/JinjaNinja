@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ask Mate</title>
+</head>
+<body>
+<h1>Ask Mate</h1>
+<h2>Sort Questions</h2>
+<h2>Ask Question</h2>
+
+<table width="100%" border="5">
+        <tr>
+            <th>ID</th>
+            <th>Title(Click to see the details)</th>
+            <th>Answer</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        {% for question in table %}
+            <tr>
+
+                <td>{{ question.id }}</td>
+                <td>{{ question.title }}</td>
+                <td>Answer</td>
+                <td>Edit</td>
+                <td>Delete</td>
+        {% endfor %}
+            </tr>
+</table>
+</body>
+</html>
