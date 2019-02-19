@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Question {{ id }}</title>
 </head>
 <body>
-
+<h1>Question {{ id }}</h1>
+<table width="100%" border="5">
+    <tr>
+       <th>ID</th>
+        <th>Submission Time</th>
+        <th>View Number</th>
+        <th>Vote Number</th>
+        <th>Title</th>
+        <th>Message</th>
+        <th>Image</th>
+    </tr>
+    <tr>
+        <td>{{ displayed_table.id }}</td>
+        <td>{{ displayed_table.submission_time }}</td>
+        <td>{{ displayed_table.view_number }}</td>
+        <td>{{ displayed_table.vote_number }}</td>
+        <td>{{ displayed_table.title }}</td>
+        <td>{{ displayed_table.message }}</td>
+        <td><img src="{{ displayed_table.image}}" alt = "Question Picture"width="100" height="100"></td>
+    </tr>
+</table>
 </body>
 </html>

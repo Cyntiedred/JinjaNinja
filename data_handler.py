@@ -9,12 +9,13 @@ DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
 
 def main_page():
     table = []
-    with open(DATA_FILE_PATH) as csvfile:
+    with open('question.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             row = dict(row)
             table.append(row)
     return table
+
 
 '''
 def save_story(story_data):
