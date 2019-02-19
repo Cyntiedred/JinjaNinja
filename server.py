@@ -11,6 +11,14 @@ def route_list():
 
     return render_template('list.html', table=table)
 
+@app.route('/display/<int:id>')
+def display_question(id):
+    table = data_handler.main_page()
+    displayed_table = table[id-1]
+
+    return render_template('display.html', displayed_table = displayed_table, id = id )
+
+
 
 if __name__ == '__main__':
     app.run(
