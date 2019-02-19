@@ -12,6 +12,7 @@ def route_list():
     return render_template('list.html', table=table)
 
 
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
