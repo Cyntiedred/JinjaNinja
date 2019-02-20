@@ -38,8 +38,6 @@ def write_answers_to_csv(add_to_file):
 
 
 
-
-'''
 def save_story(story_data):
     with open(DATA_FILE_PATH, 'a') as csvfile:
         fieldnames = DATA_HEADER
@@ -60,10 +58,12 @@ def modify_story(table, id, story_data):
             writer.writerow(table[i])
         os.remove('data.csv')
         os.rename("temporary.csv",'data.csv')
-=======
+
+
+
 def get_next_vote():
     pass
->>>>>>> a1fd80187fb4214f9178c50e1ede8e77e9cf36cc
+
 
 def add_submisson():
     return SUBMISSION_TIME
@@ -73,5 +73,3 @@ def add_question_to_file(story):
     with open('question.csv', 'a', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER_QUESTION)
         writer.writerow(story)
-
-'''

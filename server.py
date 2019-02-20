@@ -20,13 +20,14 @@ def display_question(id):
 
     return render_template('display.html', displayed_table = displayed_table, id = id)
 
+
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def post_an_answer(question_id: int):
 
     previous_answers = data_handler.get_data_from_answers_csv()
     answer_adding = {
         'id':len(previous_answers),
-        'submission_time': 0,
+        'submission_time': data_handler.add_submisson(),
         'vote_number': 0,
         'question_id':int(question_id),
         'message': request.form.get('message'),
