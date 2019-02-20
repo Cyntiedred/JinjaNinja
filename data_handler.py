@@ -1,6 +1,7 @@
 import csv
 import os
 import datetime
+import time
 
 
 
@@ -10,11 +11,13 @@ DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","messag
 DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
 SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
 
+
 def main_page():
     table = []
     with open('question.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
+            row['submission_time'] = time.ctime(int(row['submission_time']))
             row = dict(row)
             table.append(row)
     return table
@@ -25,6 +28,7 @@ def get_data_from_answers_csv():
     with open('answer.csv', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
+            row['submission_time']=time.ctime(int(row['submission_time']))
             line = dict(row)
             table.append(line)
     return table
