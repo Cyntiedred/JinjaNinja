@@ -25,7 +25,7 @@
                 <tr>
                     <td>{{ question.id }}</td>
                     <td><a href = "/display/{{ question.id }}"> {{ question.title }} </a></td>
-                    <td>Answer</td>
+                    <td><a href = "{{ url_for ('post_an_answer', question_id=question['id']) }}">Answer</a></td>
                     <td>Edit</td>
                     <td>Delete</td>
                 </tr>

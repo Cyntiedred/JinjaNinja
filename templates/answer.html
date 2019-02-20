@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post an answer</title>
+    <style>
+         .gap-15 {
+				width:100%;
+				height:15px;
+                    }
+    </style>
+</head>
+<body>
+    <form action="/">
+    <input type="submit" value="Go back to the main menu" />
+    <div class="gap-15"></div>
+    </form>
+     <table width="100%" border="5">
+        <tr align="center">
+            <th>Id</th>
+            <th>Submission Time</th>
+            <th>Vote Number</th>
+            <th>Question ID</th>
+            <th>Message</th>
+            <th>Image</th>
+        </tr>
+        {% for answer in previous_answers %}
+            <tr align="center">
+                <td>{{ answer['id'] }}</td>
+                <td>{{ answer['submission_time'] }}</td>
+                <td>{{ answer['vote_number'] }}</td>
+                <td>{{ answer['question_id'] }}</td>
+                <td><b>{{ answer['message'] }}</b></td>
+                <td>{{ answer['image'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    <form action = "{{ form_url }}" method="post">
+        <input type="hidden" name="id" value="{{ answer_adding['id'] }}">
+        <input type="hidden" name="submission_time" value="{{ answer_adding['submission_time'] }}">
+        <input type="hidden" name="vote_number" value="{{ answer_adding['vote_number'] }}">
+        <p>
+            <label for="question_id">Question ID: {{ answer_adding['question_id'] }}</label>
+        </p>
+        <p>
+            <label for="message">Enter your answer here:</label>
+            <br>
+            <textarea name="message" id="message" cols="100" rows="5" required></textarea>
+        </p>
+        <button type="submit" >Submit</button>
+    </form>
+</body>
+</html>

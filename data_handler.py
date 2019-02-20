@@ -17,6 +17,25 @@ def main_page():
     return table
 
 
+def get_data_from_answers_csv():
+    table = []
+    with open('answer.csv', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            line = dict(row)
+            table.append(line)
+    return table
+
+
+def write_answers_to_csv(add_to_file):
+    with open('answer.csv', 'a', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER_ANSWER)
+        writer.writerow(add_to_file)
+
+
+
+
+
 '''
 def save_story(story_data):
     with open(DATA_FILE_PATH, 'a') as csvfile:
