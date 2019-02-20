@@ -15,9 +15,9 @@ def route_list():
 @app.route('/display/<int:id>')
 def display_question(id):
     table = data_handler.main_page()
-    displayed_table = table[id-1]
+    displayed_table = table[id]
 
-    return render_template('display.html', displayed_table = displayed_table, id = id )
+    return render_template('display.html', displayed_table = displayed_table, id = id)
 
 
 @app.route('/ask',  methods=['GET', 'POST'])
@@ -37,7 +37,7 @@ def ask_new_question():
         return redirect('/')
 
 
-    return render_template('ask.html', form_url=url_for('ask_new_question'))
+    return render_template('ask.html',form_url=url_for('ask_new_question'))
 
 if __name__ == '__main__':
     app.run(
