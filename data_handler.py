@@ -3,7 +3,6 @@ import os
 import datetime
 
 
-
 DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
 DATA_HEADER_QUESTION = ["id","submission_time", "view_number","vote_number","title","message","image"]
 DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
@@ -20,8 +19,6 @@ def main_page():
     return table
 
 
-def get_next_vote():
-    pass
 
 def add_submisson():
     return SUBMISSION_TIME

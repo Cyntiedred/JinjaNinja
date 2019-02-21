@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
-
-
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import data_handler
+
+view = 0
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def display_question(id):
     return render_template('display.html', displayed_table = displayed_table, id = id)
 
 
-@app.route('/ask',  methods=['GET', 'POST'])
+@app.route('/ask', methods=['GET', 'POST'])
 def ask_new_question():
     table = data_handler.main_page()
     if request.method == 'POST':
@@ -31,13 +31,15 @@ def ask_new_question():
             'vote_number': 0,
             'title': request.form.get('title'),
             'message': request.form.get('message'),
-            'image':0
+            'image': request.form.get('image'),
         }
         data_handler.add_question_to_file(story)
         return redirect('/')
 
 
     return render_template('ask.html',form_url=url_for('ask_new_question'))
+
+
 
 if __name__ == '__main__':
     app.run(
