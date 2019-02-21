@@ -4,12 +4,12 @@ import datetime
 import time
 
 
+
 DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
 DATA_HEADER_QUESTION = ["id","submission_time", "view_number","vote_number","title","message","image"]
 DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
 DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
 SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
-
 
 
 def main_page():
@@ -50,7 +50,36 @@ def write_into_csv(table):
             writer.writerow(dics)
 
 
+'''
+def edit_question(table, id, edited_question):
+    with open('temporary.csv', 'a') as csvfile:
+        fieldnames = DATA_HEADER_QUESTION
+        fieldnamewriter = csv.writer(csvfile)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        fieldnamewriter.writerow(fieldnames)
+        for i in range(id):
+            writer.writerow(table[i])
+        writer.writerow(edited_question)
+        for i in range(id, len(table)):
+            writer.writerow(table[i])
+        os.remove('question.csv')
+        os.rename("temporary.csv",'question.csv')
 
+
+def edit_answer(table, id, edited_answer):
+    with open('temporary.csv', 'a') as csvfile:
+        fieldnames = DATA_HEADER_QUESTION
+        fieldnamewriter = csv.writer(csvfile)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        fieldnamewriter.writerow(fieldnames)
+        for i in range(id-1):
+            writer.writerow(table[i])
+        writer.writerow(edited_answer)
+        for i in range(id, len(table)):
+            writer.writerow(table[i])
+        os.remove('answer.csv')
+        os.rename("temporary.csv",'answer.csv')
+'''
 
 def add_submisson():
     return SUBMISSION_TIME

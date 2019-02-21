@@ -7,7 +7,7 @@
 <body>
 <h1>Question {{ id }}</h1>
 <table width="100%" border="5">
-    <tr>
+    <tr align="center">
        <th>ID</th>
         <th>Submission Time</th>
         <th>View Number</th>
@@ -22,8 +22,8 @@
         <td>{{ displayed_table.view_number }}</td>
         <td>
             {{ displayed_table.vote_number }}<br>
-            <a href = "/question/{{ id }}/vote-up">Vote Up</a><br>
-            <a href = "/question/{{ id }}/vote-down">Vote Down</a><br>
+            <a href = "/question/{{id}}/question/1">Vote Up</a><br>
+            <a href = "/question/{{id}}/question/-1">Vote Down</a><br>
         </td>
         <td>{{ displayed_table.title }}</td>
         <td>{{ displayed_table.message }}</td>
