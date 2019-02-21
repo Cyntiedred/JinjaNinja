@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-
+import time
 
 import data_handler
 
@@ -17,8 +17,11 @@ def route_list():
 def display_question(id):
     table = data_handler.main_page()
     displayed_table = table[id]
+    for dics in table:
+        dics['submission_time'] = time.ctime(int(dics['submission_time']))
 
-    return render_template('display.html', displayed_table = displayed_table, id = id)
+    return render_template('display.html', displayed_table=displayed_table, id=id,), data_handler.write_into_csv(data_handler.main_page())
+
 
 #ASOUMÉ
 @app.route('/question/<int:id>/vote-up')
