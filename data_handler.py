@@ -41,7 +41,6 @@ def write_answers_to_csv(add_to_file):
 
 
 
-
 def save_story(story_data):
     with open(DATA_FILE_PATH, 'a') as csvfile:
         fieldnames = DATA_HEADER
