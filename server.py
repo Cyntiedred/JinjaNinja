@@ -19,6 +19,23 @@ def display_question(id):
 
     return render_template('display.html', displayed_table = displayed_table, id = id)
 
+@app.route('/question/<int:id>/vote-up')
+def question_vote_up(id):
+    table = data_handler.main_page()
+    vote = table[id]['vote_number']
+    vote +=1
+    return redirect(url_for('display_questions'))
+
+
+@app.route('/question/<int:id>/vote-down')
+def question_vote_down(id):
+    table = data_handler.main_page()
+    vote = table[id]['vote_number']
+    vote -= 1
+    return redirect(url_for('display_questions'))
+
+
+
 
 @app.route('/ask',  methods=['GET', 'POST'])
 def ask_new_question():
