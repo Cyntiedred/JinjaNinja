@@ -54,3 +54,4 @@ def add_question_to_file(story):
     with open('question.csv', 'a', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER_QUESTION)
         writer.writerow(story)
+

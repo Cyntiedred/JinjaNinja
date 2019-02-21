@@ -14,11 +14,13 @@ def route_list():
 
 
 @app.route('/display/<int:id>')
-def display_question(id):
+def display_question(id:int):
     table = data_handler.main_page()
     displayed_table = table[id]
+    view_number = int(table[id]['view_number'])
+    view_number = view_number + 1
 
-    return render_template('display.html', displayed_table = displayed_table, id = id)
+    return render_template('display.html', displayed_table = displayed_table, id = id), view_number
 
 #ASOUMÉ
 @app.route('/question/<int:id>/vote-up')
@@ -39,7 +41,7 @@ def question_vote_down(id):
 
 
 
-@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+@app.route('/question/<int:question_id>/new-answer', methods=['GET', 'POST'])
 def post_an_answer(question_id: int):
 
     previous_answers = data_handler.get_data_from_answers_csv()
@@ -112,3 +114,4 @@ if __name__ == '__main__':
         port=8000,
         debug=True,
     )
+
