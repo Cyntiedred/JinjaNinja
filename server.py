@@ -16,11 +16,14 @@ def route_list():
 @app.route('/display/<int:id>')
 def display_question(id):
     table = data_handler.main_page()
+    table_with_answers = data_handler.get_data_from_answers_csv()
+
     displayed_table = table[id]
+
     for dics in table:
         dics['submission_time'] = time.ctime(int(dics['submission_time']))
 
-    return render_template('display.html', displayed_table=displayed_table, id=id,), data_handler.write_into_csv(data_handler.main_page())
+    return render_template('display.html', displayed_table=displayed_table, id=id, table_with_answers=table_with_answers), data_handler.write_into_csv(data_handler.main_page())
 
 
 

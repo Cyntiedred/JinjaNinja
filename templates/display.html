@@ -16,7 +16,7 @@
         <th>Message</th>
         <th>Image</th>
     </tr>
-    <tr>
+    <tr align="center">
         <td>{{ displayed_table.id }}</td>
         <td>{{ displayed_table.submission_time }}</td>
         <td>{{ displayed_table.view_number }}</td>
@@ -29,6 +29,30 @@
         <td>{{ displayed_table.message }}</td>
         <td><img src="{{ displayed_table.image}}" alt = "Question Picture"width="100" height="100"></td>
     </tr>
+</table>
+
+
+
+<h1 align="left">Answers: </h1>
+<table width="100%" border="5" align="left">
+    <tr>
+        <th>Submission Time</th>
+        <th>Message</th>
+        <th>Vote Number</th>
+    </tr>
+    {% for answer in table_with_answers %}
+        {% if answer['question_id']== displayed_table.id %}
+            <tr align="center">
+                <td>{{ answer['submission_time'] }}</td>
+                <td><b>{{ answer['message'] }}</b></td>
+                <td>{{ answer['vote_number'] }}<br>
+            </tr>
+        {% endif %}
+    {% endfor %}
+
+
+
+
 </table>
 </body>
 </html>
