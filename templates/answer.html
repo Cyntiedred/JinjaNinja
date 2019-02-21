@@ -29,7 +29,11 @@
             <tr align="center">
                 <td>{{ answer['id'] }}</td>
                 <td>{{ answer['submission_time'] }}</td>
-                <td>{{ answer['vote_number'] }}</td>
+                <td>
+                    {{ answer['vote_number'] }}<br>
+                    <a href = "/question/{{ question_id }}/new-answer/vote-up">Vote Up</a><br>
+                    <a href = "/question/{{ question_id }}/new-answer/vote-down">Vote Down</a><br>
+                </td>
                 <td>{{ answer['question_id'] }}</td>
                 <td><b>{{ answer['message'] }}</b></td>
                 <td>{{ answer['image'] }}</td>
