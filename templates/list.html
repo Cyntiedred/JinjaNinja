@@ -22,11 +22,11 @@
 
 
             {% for question in table %}
-                <tr>
+                <tr align="center">
                     <td>{{ question.id }}</td>
                     <td><a href = "/display/{{ question.id }}"> {{ question.title }} </a></td>
                     <td><a href = "{{ url_for ('post_an_answer', question_id=question['id']) }}">Answer</a></td>
-                    <td>Edit</td>
+                    <td><a href = "/question/{{ question.id }}/edit"> Edit </a></td>
                     <td>Delete</td>
                 </tr>
             {% endfor %}
