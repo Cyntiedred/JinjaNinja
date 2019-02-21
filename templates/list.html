@@ -24,8 +24,13 @@
             {% for question in table %}
                 <tr>
                     <td>{{ question.id }}</td>
+<<<<<<< HEAD
                     <td><a href = "/question/{{ question.id }}"> {{ question.title }} </a></td>
                     <td>Answer</td>
+=======
+                    <td><a href = "/display/{{ question.id }}"> {{ question.title }} </a></td>
+                    <td><a href = "{{ url_for ('post_an_answer', question_id=question['id']) }}">Answer</a></td>
+>>>>>>> dbbfabf06b2ad7984a533a553d96c32af5daffad
                     <td>Edit</td>
                     <td>Delete</td>
                 </tr>

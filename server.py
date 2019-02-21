@@ -12,7 +12,12 @@ def route_list():
 
     return render_template('list.html', table=table)
 
+<<<<<<< HEAD
 @app.route('/question/<int:id>')
+=======
+
+@app.route('/display/<int:id>')
+>>>>>>> dbbfabf06b2ad7984a533a553d96c32af5daffad
 def display_question(id):
     table = data_handler.main_page()
     displayed_table = table[id]
@@ -36,6 +41,30 @@ def question_vote_down(id):
 
 
 
+
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+def post_an_answer(question_id: int):
+
+    previous_answers = data_handler.get_data_from_answers_csv()
+    answer_adding = {
+        'id':len(previous_answers),
+        'submission_time': data_handler.add_submisson(),
+        'vote_number': 0,
+        'question_id':int(question_id),
+        'message': request.form.get('message'),
+        'image': request.form.get('image'),
+    }
+    if request.method == 'POST':
+
+
+        data_handler.write_answers_to_csv(answer_adding)
+        return render_template('answer.html',
+                               previous_answers=previous_answers,
+                               form_url=url_for('post_an_answer', question_id=question_id),
+                               answer_adding=answer_adding
+                               )
+
+    return render_template('answer.html', previous_answers=previous_answers, answer_adding=answer_adding)
 
 @app.route('/ask',  methods=['GET', 'POST'])
 def ask_new_question():
