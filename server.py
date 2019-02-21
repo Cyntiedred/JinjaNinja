@@ -20,6 +20,24 @@ def display_question(id):
 
     return render_template('display.html', displayed_table = displayed_table, id = id)
 
+#ASOUMÉ
+@app.route('/question/<int:id>/vote-up')
+def question_vote_up(id):
+    table = data_handler.main_page()
+    vote = table[id]['vote_number']
+    vote +=1
+    return redirect(url_for('display_questions'))
+
+#ASOUMÉ
+@app.route('/question/<int:id>/vote-down')
+def question_vote_down(id):
+    table = data_handler.main_page()
+    vote = table[id]['vote_number']
+    vote -= 1
+    return redirect(url_for('display_questions'))
+
+
+
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def post_an_answer(question_id: int):
@@ -45,6 +63,29 @@ def post_an_answer(question_id: int):
 
     return render_template('answer.html', previous_answers=previous_answers, answer_adding=answer_adding)
 
+#ASOUMÉ
+@app.route('/question/<question_id>/new-answer/vote-up')
+def answer_vote_up(question_id: int):
+    table = data_handler.get_data_from_answers_csv()
+    vote = table[question_id]['vote_number']
+    vote -= 1
+    return render_template('answer.html',
+                           previous_answers=previous_answers,
+                           question_id=question_id,
+                           answer_adding=answer_adding
+                           )
+#ASOUMÉ
+@app.route('/question/<question_id>/new-answer/vote-down')
+def answer_vote_down(question_id: int):
+    table = data_handler.get_data_from_answers_csv()
+    vote = table[question_id]['vote_number']
+    vote -= 1
+    return render_template('answer.html',
+                           previous_answers=previous_answers,
+                           fquestion_id=question_id,
+                           answer_adding=answer_adding
+                           )
+
 @app.route('/ask',  methods=['GET', 'POST'])
 def ask_new_question():
     table = data_handler.main_page()
@@ -63,6 +104,7 @@ def ask_new_question():
 
 
     return render_template('ask.html',form_url=url_for('ask_new_question'))
+
 
 if __name__ == '__main__':
     app.run(

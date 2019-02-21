@@ -20,7 +20,11 @@
         <td>{{ displayed_table.id }}</td>
         <td>{{ displayed_table.submission_time }}</td>
         <td>{{ displayed_table.view_number }}</td>
-        <td>{{ displayed_table.vote_number }}</td>
+        <td>
+            {{ displayed_table.vote_number }}<br>
+            <a href = "/question/{{ id }}/vote-up">Vote Up</a><br>
+            <a href = "/question/{{ id }}/vote-down">Vote Down</a><br>
+        </td>
         <td>{{ displayed_table.title }}</td>
         <td>{{ displayed_table.message }}</td>
         <td><img src="{{ displayed_table.image}}" alt = "Question Picture"width="100" height="100"></td>

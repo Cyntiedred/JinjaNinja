@@ -41,28 +41,6 @@ def write_answers_to_csv(add_to_file):
 
 
 
-def save_story(story_data):
-    with open(DATA_FILE_PATH, 'a') as csvfile:
-        fieldnames = DATA_HEADER
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writerow(story_data)
-
-
-def modify_story(table, id, story_data):
-    with open('temporary.csv', 'a') as csvfile:
-        fieldnames = DATA_HEADER
-        fieldnamewriter = csv.writer(csvfile)
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        fieldnamewriter.writerow(fieldnames)
-        for i in range(id-1):
-            writer.writerow(table[i])
-        writer.writerow(story_data)
-        for i in range(id, len(table)):
-            writer.writerow(table[i])
-        os.remove('data.csv')
-        os.rename("temporary.csv",'data.csv')
-
-
 
 def get_next_vote():
     pass
