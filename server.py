@@ -23,7 +23,8 @@ def display_question(id):
     for dics in table:
         dics['submission_time'] = time.ctime(int(dics['submission_time']))
 
-    return render_template('display.html', displayed_table=displayed_table, id=id, table_with_answers=table_with_answers), data_handler.write_into_csv(data_handler.main_page())
+    return render_template('display.html', displayed_table=displayed_table, id=id, table_with_answers=table_with_answers), \
+           data_handler.write_into_csv(data_handler.main_page())
 
 
 
