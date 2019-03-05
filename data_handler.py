@@ -4,6 +4,7 @@ import datetime
 import time
 import connection
 
+
 @connection.connection_handler
 def select_all_questions(cursor):
     cursor.execute("""
@@ -24,6 +25,14 @@ def get_question_by_id(cursor, q_id):
     return question_by_id
 
 
+@connection.connection_handler
+def vote_for_questions(cursor, q_id, vote):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number+%(vote)s
+                    WHERE id = %(q_id)s;
+                   """,
+                   {'q_id': q_id, 'vote': vote})
 
 
 

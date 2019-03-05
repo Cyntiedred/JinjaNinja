@@ -12,24 +12,23 @@ def route_list():
 
     return render_template('list.html', questions = questions)
 
+
 @app.route('/display/<int:q_id>')
 def display_question(q_id):
     question_by_id = data_handler.get_question_by_id(q_id)
 
     return render_template('display.html', question_by_id = question_by_id, q_id=q_id)
 
+
+@app.route('/question/<int:q_id>/vote-<string:vote>')
+def vote(q_id, vote):
+    data_handler.vote_for_questions(q_id, 1 if vote == 'up' else -1)
+    return redirect(url_for('display_question', q_id=q_id))
+
+
+
 '''
-@app.route('/display/<int:id>')
-def display_question(id):
-    table = data_handler.main_page()
-    table_with_answers = data_handler.get_data_from_answers_csv()
 
-    displayed_table = table[id]
-
-    for dics in table:
-        dics['submission_time'] = time.ctime(int(dics['submission_time']))
-
-    return render_template('display.html', displayed_table=displayed_table, id=id, table_with_answers=table_with_answers), data_handler.write_into_csv(data_handler.main_page())
 
 
 
