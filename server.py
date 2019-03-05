@@ -8,11 +8,11 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def route_list():
-    table = data_handler.main_page()
+    questions = data_handler.get_all_questions()
 
-    return render_template('list.html', table=table)
+    return render_template('list.html', questions=questions)
 
-
+''''
 @app.route('/display/<int:id>')
 def display_question(id):
     table = data_handler.main_page()
@@ -26,11 +26,6 @@ def display_question(id):
     return render_template('display.html', displayed_table=displayed_table, id=id, table_with_answers=table_with_answers), \
            data_handler.write_into_csv(data_handler.main_page())
 
-
-
-
-@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
-def post_an_answer(question_id: int):
 
     previous_answers = data_handler.get_data_from_answers_csv()
     answer_adding = {
@@ -52,7 +47,7 @@ def post_an_answer(question_id: int):
                                )
 
     return render_template('answer.html', previous_answers=previous_answers, answer_adding=answer_adding)
-
+'''
 '''
 
 #VOTE QUESTION
