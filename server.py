@@ -8,9 +8,9 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def route_list():
-    table = data_handler.main_page()
+    questions = data_handler.get_all_questions()
 
-    return render_template('list.html', table=table)
+    return render_template('list.html', questions=questions)
 
 
 @app.route('/display/<int:id>')

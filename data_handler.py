@@ -2,7 +2,7 @@ import csv
 import os
 import datetime
 import time
-
+import connection
 
 
 DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
@@ -10,6 +10,17 @@ DATA_HEADER_QUESTION = ["id","submission_time", "view_number","vote_number","tit
 DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
 DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
 SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
+
+
+@connection.connection_handler
+def get_all_questions(cursor):
+    cursor.execute(""" 
+                        SELECT *
+                        FROM question;
+                        """, )
+    questions = cursor.fetchall()
+    return questions
+
 
 
 def main_page():
