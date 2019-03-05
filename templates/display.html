@@ -20,19 +20,21 @@
         <th>Message</th>
         <th>Image</th>
     </tr>
+    {% for question in question_by_id %}
     <tr align="center">
-        <td>{{ displayed_table.id }}</td>
-        <td>{{ displayed_table.submission_time }}</td>
-        <td>{{ displayed_table.view_number }}</td>
+        <td>{{ question.id }}</td>
+        <td>{{ question.submission_time }}</td>
+        <td>{{ question.view_number }}</td>
         <td>
-            {{ displayed_table.vote_number }}<br>
+            {{ question.vote_number }}<br>
             <a href = "/question/{{id}}/question/1">Vote Up</a><br>
             <a href = "/question/{{id}}/question/-1">Vote Down</a><br>
         </td>
-        <td>{{ displayed_table.title }}</td>
-        <td>{{ displayed_table.message }}</td>
-        <td><img src="{{ displayed_table.image}}" alt = "Question Picture"width="100" height="100"></td>
+        <td>{{ question.title }}</td>
+        <td>{{ question.message }}</td>
+        <td><img src="{{ question.image}}" alt = "Question Picture"width="100" height="100"></td>
     </tr>
+    {% endfor %}
 </table>
 
 
@@ -53,7 +55,6 @@
             </tr>
         {% endif %}
     {% endfor %}
-
 
 
 

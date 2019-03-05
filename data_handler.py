@@ -2,14 +2,39 @@ import csv
 import os
 import datetime
 import time
+import connection
+
+@connection.connection_handler
+def select_all_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question;
+                   """,)
+    questions = cursor.fetchall()
+    return questions
+
+
+@connection.connection_handler
+def get_question_by_id(cursor, q_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE id = %(q_id)s;
+                   """,
+                   {'q_id': q_id})
+    question_by_id = cursor.fetchall()
+    return question_by_id
 
 
 
+
+
+
+'''
 DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
 DATA_HEADER_QUESTION = ["id","submission_time", "view_number","vote_number","title","message","image"]
 DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
 DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
 SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
+
 
 
 def main_page():
@@ -23,6 +48,7 @@ def main_page():
             row = dict(row)
             table.append(row)
     return table
+
 
 
 def get_data_from_answers_csv():
@@ -65,7 +91,6 @@ def edit_question(table, id, edited_question):
         os.remove('question.csv')
         os.rename("temporary.csv",'question.csv')
 
-'''
 def edit_answer(table, id, edited_answer):
     with open('temporary.csv', 'a') as csvfile:
         fieldnames = DATA_HEADER_QUESTION
@@ -79,7 +104,7 @@ def edit_answer(table, id, edited_answer):
             writer.writerow(table[i])
         os.remove('answer.csv')
         os.rename("temporary.csv",'answer.csv')
-'''
+
 
 def add_submisson():
     return SUBMISSION_TIME
@@ -90,3 +115,4 @@ def add_question_to_file(story):
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER_QUESTION)
         writer.writerow(story)
 
+'''
