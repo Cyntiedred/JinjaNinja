@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-
+import time
 
 import data_handler
 
@@ -16,8 +16,25 @@ def route_list():
 @app.route('/display/<int:q_id>')
 def display_question(q_id):
     question_by_id = data_handler.get_question_by_id(q_id)
-
+    data_handler.update_view_number(q_id)
     return render_template('display.html', question_by_id = question_by_id, q_id=q_id)
+
+
+@app.route('/ask', methods=['GET'])
+def ask_new_question():
+    return render_template('ask.html')
+
+
+@app.route('/ask', methods=['POST'])
+def add_new_question():
+    vote_number = 0
+    view_number = 0
+    title = request.form.get('title')
+    message = request.form.get('message')
+    data_handler.save_new_question(title, message, view_number,vote_number)
+
+
+    return redirect(url_for('route_list'))
 
 
 @app.route('/question/<int:q_id>/vote-<string:vote>')
@@ -29,7 +46,7 @@ def vote(q_id, vote):
 @app.route('/question/<int:q_id>/delete')
 def delete(q_id):
     data_handler.delete_answers_by_question_id(q_id)
-    data_handler.delete_question(q_id)  
+    data_handler.delete_question(q_id)
     return redirect(url_for('route_list'))
 
 
