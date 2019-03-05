@@ -7,12 +7,13 @@
 <body>
 <h1>Question {{ id }}</h1>
 <form action="/">
-        <input type="submit" value="Go back to the main menu" />
-        <div class="gap-15"></div><br>
+    <input type="submit" value="Go back to the main menu"/>
+    <div class="gap-15"></div>
+    <br>
 </form>
 <table width="100%" border="5">
     <tr align="center">
-       <th>ID</th>
+        <th>ID</th>
         <th>Submission Time</th>
         <th>View Number</th>
         <th>Vote Number</th>
@@ -21,22 +22,21 @@
         <th>Image</th>
     </tr>
     {% for question in question_by_id %}
-    <tr align="center">
-        <td>{{ question.id }}</td>
-        <td>{{ question.submission_time }}</td>
-        <td>{{ question.view_number }}</td>
-        <td>
-            {{ question.vote_number }}<br>
-            <a href = "/question/{{id}}/question/1">Vote Up</a><br>
-            <a href = "/question/{{id}}/question/-1">Vote Down</a><br>
-        </td>
-        <td>{{ question.title }}</td>
-        <td>{{ question.message }}</td>
-        <td><img src="{{ question.image}}" alt = "Question Picture"width="100" height="100"></td>
-    </tr>
+        <tr align="center">
+            <td>{{ question.id }}</td>
+            <td>{{ question.submission_time }}</td>
+            <td>{{ question.view_number }}</td>
+            <td>
+                {{ question.vote_number }}<br>
+                <a href="{{ url_for('vote', q_id=question.id, vote='up') }}">Vote Up</a><br>
+                <a href="{{ url_for('vote', q_id=question.id, vote='down') }}">Vote Down</a><br>
+            </td>
+            <td>{{ question.title }}</td>
+            <td>{{ question.message }}</td>
+            <td><img src="{{ question.image }}" alt="Question Picture" width="100" height="100"></td>
+        </tr>
     {% endfor %}
 </table>
-
 
 
 <h1 align="left">Answers: </h1>
@@ -55,7 +55,6 @@
             </tr>
         {% endif %}
     {% endfor %}
-
 
 
 </table>

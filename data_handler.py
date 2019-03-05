@@ -1,10 +1,10 @@
 import connection
 
-
 @connection.connection_handler
 def select_all_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question;
+                    SELECT * FROM question
+                    ORDER BY id;
                    """,)
     questions = cursor.fetchall()
     return questions
@@ -14,7 +14,8 @@ def select_all_questions(cursor):
 def get_question_by_id(cursor, q_id):
     cursor.execute("""
                     SELECT * FROM question
-                    WHERE id = %(q_id)s;                   """,
+                    WHERE id = %(q_id)s
+                    """,
                    {'q_id': q_id})
     question_by_id = cursor.fetchall()
     return question_by_id
@@ -30,18 +31,27 @@ def update_view_number(cursor, q_id):
 
 
 @connection.connection_handler
-def save_new_question(cursor, title, message, view_number):
+def vote_for_questions(cursor, q_id, vote):
     cursor.execute("""
-                    INSERT INTO question (submission_time, title,  message, view_number) 
-                    VALUES (NOW(), %(title)s, %(message)s, %(view_number)s)
+                    UPDATE question
+                    SET vote_number = vote_number+%(vote)s
+                    WHERE id = %(q_id)s;
+                   """,
+                   {'q_id': q_id, 'vote': vote})
+
+
+@connection.connection_handler
+def save_new_question(cursor, title, message, view_number, vote_number):
+    cursor.execute("""
+                    INSERT INTO question (submission_time, title,  message, view_number, vote_number) 
+                    VALUES (NOW(), %(title)s, %(message)s, %(view_number)s, %(vote_number)s)
                     RETURNING id;
                    """, {
         "title": title,
         "message": message,
         "view_number": view_number,
-
-
-    })
+        "vote_number": vote_number,
+                        })
     new_question = cursor.fetchall()
     return new_question
 
