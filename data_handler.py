@@ -61,7 +61,7 @@ def write_into_csv(table):
             writer.writerow(dics)
 
 
-'''
+
 def edit_question(table, id, edited_question):
     with open('temporary.csv', 'a') as csvfile:
         fieldnames = DATA_HEADER_QUESTION
@@ -76,7 +76,7 @@ def edit_question(table, id, edited_question):
         os.remove('question.csv')
         os.rename("temporary.csv",'question.csv')
 
-
+'''
 def edit_answer(table, id, edited_answer):
     with open('temporary.csv', 'a') as csvfile:
         fieldnames = DATA_HEADER_QUESTION

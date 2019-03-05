@@ -128,7 +128,6 @@ def ask_new_question():
     return render_template('ask.html',form_url=url_for('ask_new_question'))
 
 
-
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
