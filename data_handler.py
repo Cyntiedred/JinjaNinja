@@ -1,14 +1,10 @@
-import csv
-import os
-import datetime
-import time
 import connection
 
 
 @connection.connection_handler
 def select_all_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question;
+                    SELECT * FROM question ORDER BY id;
                    """,)
     questions = cursor.fetchall()
     return questions
@@ -35,6 +31,40 @@ def vote_for_questions(cursor, q_id, vote):
                    {'q_id': q_id, 'vote': vote})
 
 
+@connection.connection_handler
+def delete_question(cursor, q_id):
+    delete_question_tag_connection(cursor, q_id)
+    delete_question_comments(cursor, q_id)
+    cursor.execute("""
+                    DELETE FROM question
+                    WHERE id = %(q_id)s;
+                   """,
+                   {'q_id': q_id})
+
+
+def delete_question_tag_connection(cursor, q_id):
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id = %(q_id)s;
+                   """,
+                   {'q_id': q_id})
+
+
+def delete_question_comments(cursor, q_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE question_id = %(q_id)s;
+                   """,
+                   {'q_id': q_id})
+
+
+@connection.connection_handler
+def delete_answers_by_question_id(cursor, q_id):
+    cursor.execute("""
+                    DELETE FROM answer
+                    WHERE question_id = %(q_id)s;
+                   """,
+                   {'q_id': q_id})
 
 
 '''
@@ -45,30 +75,6 @@ DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
 SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
 
 
-
-def main_page():
-    table = []
-    with open('question.csv') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            row['submission_time'] = int(row['submission_time'])
-            row['view_number'] = int(row['view_number'])
-            row['view_number'] += 1
-            row = dict(row)
-            table.append(row)
-    return table
-
-
-
-def get_data_from_answers_csv():
-    table = []
-    with open('answer.csv', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            row['submission_time'] = time.ctime(int(row['submission_time']))
-            line = dict(row)
-            table.append(line)
-    return table
 
 
 def write_answers_to_csv(add_to_file):

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-import time
+
 
 import data_handler
 
@@ -25,6 +25,12 @@ def vote(q_id, vote):
     data_handler.vote_for_questions(q_id, 1 if vote == 'up' else -1)
     return redirect(url_for('display_question', q_id=q_id))
 
+
+@app.route('/question/<int:q_id>/delete')
+def delete(q_id):
+    data_handler.delete_answers_by_question_id(q_id)
+    data_handler.delete_question(q_id)  
+    return redirect(url_for('route_list'))
 
 
 '''
