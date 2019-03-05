@@ -12,7 +12,7 @@ def route_list():
 
     return render_template('list.html', questions=questions)
 
-''''
+
 @app.route('/display/<int:id>')
 def display_question(id):
     table = data_handler.main_page()
@@ -23,9 +23,13 @@ def display_question(id):
     for dics in table:
         dics['submission_time'] = time.ctime(int(dics['submission_time']))
 
-    return render_template('display.html', displayed_table=displayed_table, id=id, table_with_answers=table_with_answers), \
-           data_handler.write_into_csv(data_handler.main_page())
+    return render_template('display.html', displayed_table=displayed_table, id=id, table_with_answers=table_with_answers), data_handler.write_into_csv(data_handler.main_page())
 
+
+
+
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+def post_an_answer(question_id: int):
 
     previous_answers = data_handler.get_data_from_answers_csv()
     answer_adding = {
@@ -47,7 +51,7 @@ def display_question(id):
                                )
 
     return render_template('answer.html', previous_answers=previous_answers, answer_adding=answer_adding)
-'''
+
 '''
 
 #VOTE QUESTION
@@ -106,7 +110,7 @@ def edit_question(id):
 
 @app.route('/ask',  methods=['GET', 'POST'])
 def ask_new_question():
-    table = data_handler.main_page()
+    new_question = data_handler.get_new_question()
     if request.method == 'POST':
         story = {
             'id': len(table)+1,
@@ -121,8 +125,7 @@ def ask_new_question():
         return redirect('/')
 
 
-    return render_template('ask.html',form_url=url_for('ask_new_question'))
-
+    return render_template('ask.html', new_question =new_question,form_url=url_for('ask_new_question'))
 
 
 if __name__ == '__main__':
