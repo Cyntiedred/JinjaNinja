@@ -13,7 +13,6 @@
 
 <table width="100%" border="5">
         <tr>
-            <th>ID</th>
             <th>Title(Click to see the details)</th>
             <th>Answer</th>
             <th>Edit</th>
@@ -23,10 +22,9 @@
 
             {% for question in questions %}
                 <tr align="center">
-                    <td>{{ question.id }}</td>
-                    <td><a href = "/display/{{ question.id }}"> {{ question.title }} </a></td>
-                    <td><a href = "{{ url_for ('post_an_answer', question_id=question['id']) }}">Answer</a></td>
-                    <td><a href = "/edit-question/{{ question.id }}"> Edit </a></td>
+                    <td><a href = '/display/{{question.id}}'>{{ question.title }}</a></td>
+                    <td><a>Answer</a></td>
+                    <td><a> Edit </a></td>
                     <td>Delete</td>
                 </tr>
             {% endfor %}

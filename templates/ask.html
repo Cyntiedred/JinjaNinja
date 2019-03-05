@@ -6,9 +6,8 @@
 </head>
 <body>
     <h1>Add new Question</h1>
-    <form action="{{ form_url }}"
+    <form action="{{ url_for('add_new_question') }}"
           method=post enctype=multipart/form-data>
-        <input type="hidden" name="id">
         <p>
             <label for="title">Story Title:</label><br>
             <input type="text" name="title" id="title" required minlength="5">

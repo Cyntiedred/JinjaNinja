@@ -1,10 +1,52 @@
-import csv
-import os
-import datetime
-import time
 import connection
 
 
+@connection.connection_handler
+def select_all_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question;
+                   """,)
+    questions = cursor.fetchall()
+    return questions
+
+
+@connection.connection_handler
+def get_question_by_id(cursor, q_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE id = %(q_id)s;                   """,
+                   {'q_id': q_id})
+    question_by_id = cursor.fetchall()
+    return question_by_id
+
+
+@connection.connection_handler
+def update_view_number(cursor, q_id):
+    cursor.execute("""
+                    UPDATE question SET view_number = (view_number + 1)
+                    WHERE id = %(q_id)s;
+                   """,
+                   {'q_id': q_id})
+
+
+@connection.connection_handler
+def save_new_question(cursor, title, message, view_number):
+    cursor.execute("""
+                    INSERT INTO question (submission_time, title,  message, view_number) 
+                    VALUES (NOW(), %(title)s, %(message)s, %(view_number)s)
+                    RETURNING id;
+                   """, {
+        "title": title,
+        "message": message,
+        "view_number": view_number,
+
+
+    })
+    new_question = cursor.fetchall()
+    return new_question
+
+
+'''
 DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
 DATA_HEADER_QUESTION = ["id","submission_time", "view_number","vote_number","title","message","image"]
 DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
@@ -12,25 +54,18 @@ DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
 SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
 
 
-@connection.connection_handler
-def get_all_questions(cursor):
-    cursor.execute(""" 
-                        SELECT *
-                        FROM question;
-                        """, )
-    questions = cursor.fetchall()
-    return questions
 
-@connection.connection_handler
-def get_new_question(cursor):
-    cursor.execute("""
-                    INSERT INTO question (title, message) 
-                    VALUES ('');
-                   """)
-    new_question = cursor.fetchall()
-    return new_question
-
-
+def main_page():
+    table = []
+    with open('question.csv') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            row['submission_time'] = int(row['submission_time'])
+            row['view_number'] = int(row['view_number'])
+            row['view_number'] += 1
+            row = dict(row)
+            table.append(row)
+    return table
 
 
 
@@ -74,7 +109,6 @@ def edit_question(table, id, edited_question):
         os.remove('question.csv')
         os.rename("temporary.csv",'question.csv')
 
-'''
 def edit_answer(table, id, edited_answer):
     with open('temporary.csv', 'a') as csvfile:
         fieldnames = DATA_HEADER_QUESTION
@@ -88,7 +122,7 @@ def edit_answer(table, id, edited_answer):
             writer.writerow(table[i])
         os.remove('answer.csv')
         os.rename("temporary.csv",'answer.csv')
-'''
+
 
 def add_submisson():
     return SUBMISSION_TIME
@@ -99,3 +133,4 @@ def add_question_to_file(story):
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER_QUESTION)
         writer.writerow(story)
 
+'''
