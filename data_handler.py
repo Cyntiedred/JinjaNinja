@@ -5,7 +5,7 @@ import connection
 def select_all_questions(cursor):
     cursor.execute("""
                     SELECT * FROM question ORDER BY id;
-                   """, )
+                   """,)
     questions = cursor.fetchall()
     return questions
 
@@ -98,10 +98,18 @@ def save_new_question(cursor, title, message, view_number, vote_number):
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
-    })
+                        })
     new_question = cursor.fetchall()
     return new_question
 
+@connection.connection_handler
+def edit_question(cursor,q_id, title, message):
+    cursor.execute("""
+                    UPDATE question
+                    SET title = %(title)s, message = %(message)s
+                    WHERE id = %(q_id)s;
+                   """,
+                   {'q_id': q_id, 'title': title, 'message': message})
 
 @connection.connection_handler
 def add_new_comment_for_question(cursor, question_id, message):
@@ -140,6 +148,11 @@ def add_new_comment_for_answer(cursor, answer_id, message):
 
 
 '''
+DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
+DATA_HEADER_QUESTION = ["id","submission_time", "view_number","vote_number","title","message","image"]
+DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
+DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
+SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
 
 
 

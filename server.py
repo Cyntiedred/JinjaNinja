@@ -74,6 +74,24 @@ def delete(q_id):
     return redirect(url_for('route_list'))
 
 
+
+@app.route('/question/<int:q_id>/edit', methods = ['GET'])
+def edit_question(q_id):
+    question_by_id = data_handler.get_question_by_id(q_id)
+    return render_template('edit.html', q_id = q_id, question_by_id = question_by_id)
+
+
+@app.route('/question/<int:q_id>/edit', methods=['POST'])
+def save_edited_question(q_id):
+    title = request.form.get('title')
+    message = request.form.get('message')
+    data_handler.edit_question(q_id, title, message)
+    return redirect(url_for('route_list'))
+
+
+
+
+
 '''
 
 
