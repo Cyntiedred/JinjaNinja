@@ -5,9 +5,24 @@ import connection
 def select_all_questions(cursor):
     cursor.execute("""
                     SELECT * FROM question ORDER BY id;
-                   """,)
+                   """, )
     questions = cursor.fetchall()
     return questions
+
+
+@connection.connection_handler
+def select_all_answers_by_id(cursor, q_id):
+    cursor.execute("""
+                    SELECT * FROM answer 
+                    WHERE question_id = %(q_id)s
+                    ORDER BY vote_number DESC,
+                            submission_time DESC;
+                   """,
+                   {
+                       'q_id': q_id
+                   })
+    answers = cursor.fetchall()
+    return answers
 
 
 @connection.connection_handler
@@ -19,6 +34,7 @@ def get_question_by_id(cursor, q_id):
                    {'q_id': q_id})
     question_by_id = cursor.fetchall()
     return question_by_id
+
 
 
 @connection.connection_handler
@@ -74,6 +90,8 @@ def delete_answers_by_question_id(cursor, q_id):
                     WHERE question_id = %(q_id)s;
                    """,
                    {'q_id': q_id})
+
+
 @connection.connection_handler
 def save_new_question(cursor, title, message, view_number, vote_number):
     cursor.execute("""
@@ -85,9 +103,23 @@ def save_new_question(cursor, title, message, view_number, vote_number):
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
-                        })
+    })
     new_question = cursor.fetchall()
     return new_question
+
+
+@connection.connection_handler
+def add_new_answer(cursor, vote_number, question_id, message):
+    cursor.execute("""
+                    INSERT INTO answer (submission_time, vote_number, question_id, message)
+                    VALUES (NOW(), %(vote_number)s, %(question_id)s, %(message)s)
+                    RETURNING question_id;
+                    """,
+                   {
+                       "vote_number": vote_number,
+                       "question_id": question_id,
+                       "message": message,
+                   })
 
 
 '''

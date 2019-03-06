@@ -1,23 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for
-import time
 
 import data_handler
 
 app = Flask(__name__)
+
 
 @app.route('/')
 @app.route('/list')
 def route_list():
     questions = data_handler.select_all_questions()
 
-    return render_template('list.html', questions = questions)
+    return render_template('list.html', questions=questions)
 
 
 @app.route('/display/<int:q_id>')
 def display_question(q_id):
     question_by_id = data_handler.get_question_by_id(q_id)
     data_handler.update_view_number(q_id)
-    return render_template('display.html', question_by_id = question_by_id, q_id=q_id)
+    answers = data_handler.select_all_answers_by_id(q_id)
+    return render_template('display.html', question_by_id=question_by_id, q_id=q_id, answers=answers)
 
 
 @app.route('/ask', methods=['GET'])
@@ -31,8 +32,7 @@ def add_new_question():
     view_number = 0
     title = request.form.get('title')
     message = request.form.get('message')
-    data_handler.save_new_question(title, message, view_number,vote_number)
-
+    data_handler.save_new_question(title, message, view_number, vote_number)
 
     return redirect(url_for('route_list'))
 
@@ -48,6 +48,20 @@ def delete(q_id):
     data_handler.delete_answers_by_question_id(q_id)
     data_handler.delete_question(q_id)
     return redirect(url_for('route_list'))
+
+
+@app.route('/display/<int:q_id>', methods=['POST'])
+def add_new_answer(q_id):
+    vote_number = 0
+    message = request.form.get('message')
+    data_handler.add_new_answer(vote_number, q_id, message)
+    return redirect(url_for('display_question', q_id=q_id))
+
+
+
+
+
+
 
 
 '''

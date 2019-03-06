@@ -42,21 +42,28 @@
 <h1 align="left">Answers: </h1>
 <table width="100%" border="5" align="left">
     <tr>
-        <th>Submission Time</th>
-        <th>Message</th>
-        <th>Vote Number</th>
+        <th width="200px"><h4>Submission Time</h4></th>
+        <th><h2> Answer </h2></th>
+        <th width="200px"><h4>Vote Number</h4></th>
     </tr>
-    {% for answer in table_with_answers %}
-        {% if answer['question_id']== displayed_table.id %}
-            <tr align="center">
-                <td>{{ answer['submission_time'] }}</td>
-                <td><b>{{ answer['message'] }}</b></td>
-                <td>{{ answer['vote_number'] }}<br>
-            </tr>
-        {% endif %}
+    {% for answer in answers %}
+        <tr align="center">
+            <td>{{ answer.submission_time }}</td>
+            <td><b>{{ answer.message }}</b></td>
+            <td>{{ answer.vote_number }}<br>
+        </tr>
     {% endfor %}
-
-
 </table>
+
+<form action="{{ url_for('add_new_answer', q_id=q_id) }}" method="post">
+    <p>
+        <label for="message">Enter your answer here:</label>
+        <br>
+        <textarea name="message" id="message" cols="100" rows="5" required></textarea>
+    </p>
+    <button type="submit">Submit</button>
+</form>
+
+
 </body>
 </html>
