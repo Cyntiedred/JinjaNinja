@@ -38,6 +38,26 @@
     {% endfor %}
 </table>
 
+<h1 align="center">Comments: </h1>
+<table width="50%" border="3" align="center">
+    <tr>
+        <th width="200px">Submission Time</th>
+        <th>Comment</th>
+    </tr>
+    {% for comment in question_comments %}
+        <tr align="center">
+            <td>{{ comment['submission_time'] }}</td>
+            <td><b>{{ comment['message'] }}</b></td>
+        </tr>
+    {% endfor %}
+</table>
+<form action="{{ url_for('add_new_comment_question', q_id=q_id) }}"
+      method=get>
+    <br>
+    <p>
+        <input type=submit value="add a new comment">
+    </p>
+</form>
 
 <h1 align="left">Answers: </h1>
 <table width="100%" border="5" align="left">
@@ -55,8 +75,7 @@
             </tr>
         {% endif %}
     {% endfor %}
-
-
 </table>
+
 </body>
 </html>

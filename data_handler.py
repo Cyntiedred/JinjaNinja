@@ -5,7 +5,7 @@ import connection
 def select_all_questions(cursor):
     cursor.execute("""
                     SELECT * FROM question ORDER BY id;
-                   """,)
+                   """, )
     questions = cursor.fetchall()
     return questions
 
@@ -19,6 +19,17 @@ def get_question_by_id(cursor, q_id):
                    {'q_id': q_id})
     question_by_id = cursor.fetchall()
     return question_by_id
+
+
+@connection.connection_handler
+def get_answer_by_id(cursor, a_id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE id = %(a_id)s
+                    """,
+                   {'a_id': a_id})
+    answer_by_id = cursor.fetchall()
+    return answer_by_id
 
 
 @connection.connection_handler
@@ -74,6 +85,8 @@ def delete_answers_by_question_id(cursor, q_id):
                     WHERE question_id = %(q_id)s;
                    """,
                    {'q_id': q_id})
+
+
 @connection.connection_handler
 def save_new_question(cursor, title, message, view_number, vote_number):
     cursor.execute("""
@@ -85,17 +98,48 @@ def save_new_question(cursor, title, message, view_number, vote_number):
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
-                        })
+    })
     new_question = cursor.fetchall()
     return new_question
 
 
+@connection.connection_handler
+def add_new_comment_for_question(cursor, question_id, message):
+    cursor.execute("""
+                    INSERT INTO comment (question_id, message, submission_time) 
+                    VALUES (%(question_id)s, %(message)s, NOW());
+                   """, {
+        "question_id": question_id,
+        "message": message,
+    })
+
+
+@connection.connection_handler
+def get_question_comment(cursor, q_id):
+    cursor.execute("""
+                    SELECT * FROM comment
+                    WHERE question_id = %(q_id)s
+                    """,
+                   {'q_id': q_id})
+    question_comments = cursor.fetchall()
+    return question_comments
+
+
+@connection.connection_handler
+def add_new_comment_for_answer(cursor, answer_id, message):
+    cursor.execute("""
+                    INSERT INTO comment (answer_id, message, submission_time, edited_count) 
+                    VALUES (%(answer_id)s, %(message)s, NOW(), 0)
+                    RETURNING id;
+                   """, {
+        "answer_id": answer_id,
+        "message": message,
+    })
+    answer_comment = cursor.fetchall()
+    return answer_comment
+
+
 '''
-DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'question.csv'
-DATA_HEADER_QUESTION = ["id","submission_time", "view_number","vote_number","title","message","image"]
-DATA_HEADER_ANSWER = ["id","submission_time","vote_number","question_id","message","image"]
-DATA_HEADER_LIST = ["id","title","answer","edit","delete"]
-SUBMISSION_TIME = datetime.datetime.now().strftime("%s")
 
 
 
