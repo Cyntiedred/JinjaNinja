@@ -147,6 +147,8 @@ def edit_question(cursor,q_id, title, message):
                    """,
                    {'q_id': q_id, 'title': title, 'message': message})
 
+
+
 @connection.connection_handler
 def add_new_comment_for_question(cursor, question_id, message):
     cursor.execute("""
@@ -159,14 +161,24 @@ def add_new_comment_for_question(cursor, question_id, message):
 
 
 @connection.connection_handler
-def get_question_comment(cursor, q_id):
+def get_question_comment(cursor):
     cursor.execute("""
                     SELECT * FROM comment
-                    WHERE question_id = %(q_id)s
-                    """,
-                   {'q_id': q_id})
+                    WHERE question_id IS NOT NULL
+                    """,)
     question_comments = cursor.fetchall()
     return question_comments
+
+
+@connection.connection_handler
+def get_answer_comment(cursor):
+    cursor.execute("""
+                    SELECT * FROM comment
+                    WHERE answer_id IS NOT NULL
+                    """,)
+    answer_comments = cursor.fetchall()
+    return answer_comments
+
 
 
 @connection.connection_handler
@@ -181,6 +193,9 @@ def add_new_comment_for_answer(cursor, answer_id, message):
     })
     answer_comment = cursor.fetchall()
     return answer_comment
+
+
+
 
 
 
@@ -216,32 +231,3 @@ def get_question_id_by_answer(cursor,a_id):
     q_id = cursor.fetchone()
     return q_id['question_id']
 
-'''
-
-
-
-def edit_answer(table, id, edited_answer):
-    with open('temporary.csv', 'a') as csvfile:
-        fieldnames = DATA_HEADER_QUESTION
-        fieldnamewriter = csv.writer(csvfile)
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        fieldnamewriter.writerow(fieldnames)
-        for i in range(id-1):
-            writer.writerow(table[i])
-        writer.writerow(edited_answer)
-        for i in range(id, len(table)):
-            writer.writerow(table[i])
-        os.remove('answer.csv')
-        os.rename("temporary.csv",'answer.csv')
-
-
-def add_submisson():
-    return SUBMISSION_TIME
-
-def add_question_to_file(story):
-
-    with open('question.csv', 'a', newline='', encoding='utf-8') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER_QUESTION)
-        writer.writerow(story)
-
-'''

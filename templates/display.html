@@ -38,7 +38,7 @@
     {% endfor %}
 </table>
 
-<h1 align="left">Comments: </h1>
+<h1 align="left"> Question Comments: </h1>
 <table width="50%" border="3" align="center">
     <tr>
         <th width="200px">Submission Time</th>
@@ -85,6 +85,20 @@
     </p>
     <button type="submit">Submit</button>
 </form>
+
+<h1 align="left"> Answer Comments: </h1>
+<table width="50%" border="3" align="center">
+    <tr>
+        <th width="200px">Submission Time</th>
+        <th>Comment</th>
+    </tr>
+    {% for comment in answer_comments %}
+        <tr align="left">
+            <td>{{ comment['submission_time'] }}</td>
+            <td><b>{{ comment['message'] }}</b></td>
+        </tr>
+    {% endfor %}
+</table>
 
 
 </body>
