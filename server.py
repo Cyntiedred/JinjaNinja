@@ -68,6 +68,12 @@ def vote(q_id, vote):
     data_handler.vote_for_questions(q_id, 1 if vote == 'up' else -1)
     return redirect(url_for('display_question', q_id=q_id))
 
+@app.route('/answer/<int:a_id>/vote-<string:vote>')
+def vote_for_answer(a_id, vote):
+    data_handler.vote_for_answers(a_id, 1 if vote == 'up' else -1)
+    q_id = data_handler.get_question_id_by_answer(a_id)
+    return redirect(url_for('display_question', q_id=q_id))
+
 
 @app.route('/question/<int:q_id>/delete')
 def delete(q_id):

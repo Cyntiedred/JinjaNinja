@@ -71,6 +71,8 @@
             <td>{{ answer.submission_time }}</td>
             <td><b><a href = "{{ url_for('edit_answer', a_id = answer.id) }}">{{ answer.message }}</a></b></td>
             <td>{{ answer.vote_number }}<br>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up') }}">Vote up</a>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down') }}">Vote down</a>
         </tr>
     {% endfor %}
 </table>

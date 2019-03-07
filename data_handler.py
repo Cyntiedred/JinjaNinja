@@ -66,6 +66,15 @@ def vote_for_questions(cursor, q_id, vote):
                    """,
                    {'q_id': q_id, 'vote': vote})
 
+@connection.connection_handler
+def vote_for_answers(cursor, a_id, vote):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number+%(vote)s
+                    WHERE id = %(a_id)s;
+                   """,
+                   {'a_id': a_id, 'vote': vote})
+
 
 @connection.connection_handler
 def delete_question(cursor, q_id):
