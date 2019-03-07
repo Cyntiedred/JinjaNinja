@@ -3,27 +3,27 @@
 {% block content %}
 <h1>Ask Mate</h1>
 <h2>Sort Questions</h2>
-<br>
-<a href="/ask">Ask Question</a>
-<br>
+    <br>
+    <a href="/ask">Ask Question</a>
+    <br>
 
 <table width="100%" border="5">
-    <tr>
-        <th>Submission time</th>
-        <th>Title(Click to see the details)</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-
-
-    {% for question in questions %}
-        <tr align="center">
-            <td width="200"><a>{{ question.submission_time }}</a></td>
-            <td><a href='/display/{{ question.id }}'>{{ question.title }}</a></td>
-            <td><a href='/question/{{ question.id }}/edit'> Edit </a></td>
-            <td><a href='/question/{{ question.id }}/delete'>Delete</td>
+        <tr>
+            <th width="200px">Submission Time</th>
+            <th>Title(Click to see the details)</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
-    {% endfor %}
+
+
+            {% for question in questions %}
+                <tr align="center">
+                    <td><a>{{ question.submission_time }}</a></td>
+                    <td><a href = '/display/{{question.id}}'>{{ question.title }}</a></td>
+                    <td><a href = '/question/{{question.id}}/edit'> Edit </a></td>
+                    <td><a href='/question/{{question.id}}/delete'>Delete</td>
+                </tr>
+            {% endfor %}
 
 
 </table>

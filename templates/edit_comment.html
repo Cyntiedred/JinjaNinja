@@ -5,13 +5,13 @@
     <h1>Edit Answer {{ a_id }}</h1>
     <form action="{{ url_for('save_edited_answer', a_id = a_id, answer_by_id = answer_by_id) }}"
           method=post enctype=multipart/form-data>
-        {% for answer in answer_by_id %}
+        {% for comment  in comment_by_id %}
         <p>
             <label for="message">message</label><br>
-            <textarea name="message" id="message" cols="40" rows="4">{{ answer.message }}</textarea>
+            <textarea name="message" id="message" cols="40" rows="4">{{ comment.message }}</textarea>
         </p>
         <p>
-            <input type=submit value="ask a question">
+            <input type=submit value="Edit your comment">
         </p>
         {% endfor %}
     </form>
