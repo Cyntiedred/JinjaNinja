@@ -35,7 +35,7 @@
     {% endfor %}
 </table>
 
-<h1 align="center">Comments: </h1>
+<h1 align="left"> Question Comments: </h1>
 <table width="50%" border="3" align="center">
     <tr>
         <th width="200px">Submission Time</th>
@@ -43,11 +43,10 @@
         <th>Edited Count</th>
     </tr>
     {% for comment in question_comments %}
-        <tr align="center">
+        <tr align="left">
             <td>{{ comment['submission_time'] }}</td>
             <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b></td>
             <td>It has been edited {{ comment.edited_count }} times.</td>
-            <td><b>{{ comment['message'] }}
         </tr>
     {% endfor %}
 </table>

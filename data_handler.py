@@ -304,3 +304,4 @@ def edit_comment(cursor,c_id, edited_count_add, message):
                    """,
                    {'c_id': c_id, 'edited_count_add': edited_count_add, 'message': message})
 
+
