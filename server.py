@@ -98,55 +98,24 @@ def save_edited_question(q_id):
     return redirect(url_for('route_list'))
 
 
-'''
+
+
+@app.route('/answer/<int:a_id>/edit', methods=['GET'])
+def edit_answer(a_id):
+    answer_by_id = data_handler.get_answer_by_id(a_id)
+    return render_template('edit_answer.html', a_id=a_id, answer_by_id=answer_by_id)
 
 
 
+@app.route('/answer/<int:a_id>/edit', methods=['POST'])
+def save_edited_answer(a_id):
+
+    message = request.form.get('message')
+    data_handler.edit_answer(a_id, message)
+    q_id = data_handler.get_question_id_by_answer(a_id)
+    return redirect(url_for('display_question', q_id=q_id))
 
 
-@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
-def post_an_answer(question_id: int):
-
-    previous_answers = data_handler.get_data_from_answers_csv()
-    answer_adding = {
-        'id':len(previous_answers),
-        'submission_time': data_handler.add_submisson(),
-        'vote_number': 0,
-        'question_id':int(question_id),
-        'message': request.form.get('message'),
-        'image': request.form.get('image'),
-    }
-    if request.method == 'POST':
-
-
-        data_handler.write_answers_to_csv(answer_adding)
-        return render_template('answer.html',
-                               previous_answers=previous_answers,
-                               form_url=url_for('post_an_answer', question_id=question_id),
-                               answer_adding=answer_adding
-                               )
-
-    return render_template('answer.html', previous_answers=previous_answers, answer_adding=answer_adding)
-
-
-
-@app.route('/question/<int:id>/answer/<int:vote>')
-def vote_answer(id,vote):
-    table = data_handler.get_data_from_answers_csv()
-    edited_answer = {
-        'id': table[id]['id'],
-        'submission_time': table[id]['submission_time'],
-        'vote_number': int(table[id]['vote_number'])+vote,
-        'question_id': table[id]['question_id'],
-        'message': table[id]['message'],
-        'image': table[id]['image']
-    }
-    data_handler.edit_answer(table,id,edited_answer,)
-    return redirect(url_for('post_an_answer'))
-
-
-
-'''
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
