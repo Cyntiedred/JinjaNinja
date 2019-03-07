@@ -13,8 +13,8 @@
 
 <table width="100%" border="5">
     <tr>
+        <th>Submission Time</th>
         <th>Title(Click to see the details)</th>
-        <th>Answer</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -22,8 +22,8 @@
 
     {% for question in questions %}
         <tr align="center">
+            <td width="200"><a>{{ question.submission_time }}</a></td>
             <td><a href='/display/{{ question.id }}'>{{ question.title }}</a></td>
-            <td><a>Answer</a></td>
             <td><a href='/question/{{ question.id }}/edit'> Edit </a></td>
             <td><a href='/question/{{ question.id }}/delete'>Delete</td>
         </tr>

@@ -4,9 +4,10 @@ import data_handler
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def show_five_latest_questions():
-    latest_questions =data_handler.select_five_latest_questions()
+    latest_questions = data_handler.select_five_latest_questions()
     return render_template('five_latest_questions.html', questions=latest_questions)
 
 
