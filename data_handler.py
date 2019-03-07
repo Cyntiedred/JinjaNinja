@@ -132,6 +132,14 @@ def delete_answer_comments(cursor, a_id):
                    {'a_id': a_id})
 
 @connection.connection_handler
+def delete_comments(cursor, c_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id = %(c_id)s;
+                   """,
+                   {'c_id': c_id})
+
+@connection.connection_handler
 def delete_answers_by_question_id(cursor, q_id):
     cursor.execute("""
                     DELETE FROM answer

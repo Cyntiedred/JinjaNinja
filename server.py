@@ -23,7 +23,7 @@ def route_list():
 
 ############################### QUESTION PAGE############################################
 
-#DETAILS ABOUT QUESTION, COMMENTS OF THE QUESTION, ANSWERS OF THE QUESTION
+# DETAILS ABOUT QUESTION, COMMENTS OF THE QUESTION, ANSWERS OF THE QUESTION
 
 
 @app.route('/display/<int:q_id>')
@@ -38,7 +38,8 @@ def display_question(q_id):
                            question_by_id=question_by_id,
                            q_id=q_id,
                            question_comments=question_comments,
-                           answers=answers, answer_comments = answer_comments)
+                           answers=answers,
+                           answer_comments=answer_comments)
 
 
 ############################### NEW STUFF  ############################################
@@ -101,7 +102,6 @@ def add_new_answer(q_id):
     return redirect(url_for('display_question', q_id=q_id))
 
 
-
 ############################### EDIT STUFF ############################################
 
 
@@ -113,6 +113,7 @@ def vote(q_id, vote):
     data_handler.vote_for_questions(q_id, 1 if vote == 'up' else -1)
     return redirect(url_for('display_question', q_id=q_id))
 
+
 ##### VOTE ANSWER UP OR DOWN
 
 @app.route('/answer/<int:a_id>/vote-<string:vote>')
@@ -121,6 +122,8 @@ def vote_for_answer(a_id, vote):
     q_id = data_handler.get_question_by_id(a_id)
     return redirect(url_for('display_question', q_id=q_id))
 
+
+############################### DELETE STUFF ############################################
 
 ##### DELETE WHOLE QUESTION
 
@@ -131,17 +134,22 @@ def delete(q_id):
     return redirect(url_for('route_list'))
 
 
-@app.route('/comments/int:<q_id>/delete')
-def delete_question_comment(q_id):
-    data_handler.delete_question_comments(q_id)
+##### DELETE QUESTION_COMMENT
 
-    return redirect(url_for('display_question', q_id=q_id))
+@app.route('/comments/int:<c_id>/delete')
+def delete_question_comment(c_id):
+    comment_by_id = data_handler.get_comment_by_id(c_id)
+    data_handler.delete_comments(c_id)
 
-@app.route('/comments/int:<a_id>/delete')
-def delete_answer_comment(a_id):
-    data_handler.delete_answer_comments(a_id)
+    return redirect(url_for('route_list', comment_by_id=comment_by_id))
 
-    return redirect(url_for('display_question', a_id=a_id))
+
+@app.route('/comments/int:<c_id>/delete')
+def delete_answer_comment(c_id):
+    comment_by_id = data_handler.get_comment_by_id(c_id)
+    data_handler.delete_comments(c_id)
+
+    return redirect(url_for('route_list', c_id=c_id, comment_by_id=comment_by_id))
 
 
 ##### EDIT QUESTION
@@ -160,6 +168,7 @@ def save_edited_question(q_id):
     data_handler.edit_question(q_id, title, message)
     return redirect(url_for('route_list'))
 
+
 ##### EDIT ANSWER
 
 
@@ -175,7 +184,6 @@ def save_edited_answer(a_id):
     data_handler.edit_answer(a_id, message)
     q_id = data_handler.get_question_id_by_comment(c_id)
     return redirect(url_for('display_question', q_id=q_id))
-
 
 
 ##### EDIT COMMENT
