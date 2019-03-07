@@ -11,6 +11,17 @@ def select_all_questions(cursor):
 
 
 @connection.connection_handler
+def select_five_latest_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question 
+                    ORDER BY submission_time DESC 
+                    LIMIT 5;
+                   """, )
+    latest_questions = cursor.fetchall()
+    return latest_questions
+
+
+@connection.connection_handler
 def select_all_answers_by_id(cursor, q_id):
     cursor.execute("""
                     SELECT * FROM answer 
@@ -47,6 +58,7 @@ def get_answer_by_id(cursor, a_id):
     return answer_by_id
 
 
+
 @connection.connection_handler
 def update_view_number(cursor, q_id):
     cursor.execute("""
@@ -64,6 +76,15 @@ def vote_for_questions(cursor, q_id, vote):
                     WHERE id = %(q_id)s;
                    """,
                    {'q_id': q_id, 'vote': vote})
+
+@connection.connection_handler
+def vote_for_answers(cursor, a_id, vote):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number+%(vote)s
+                    WHERE id = %(a_id)s;
+                   """,
+                   {'a_id': a_id, 'vote': vote})
 
 
 @connection.connection_handler
@@ -92,14 +113,6 @@ def delete_question_comments(cursor, q_id):
                    """,
                    {'q_id': q_id})
 
-@connection.connection_handler
-def new_delete_question_comments(cursor, id):
-    cursor.execute("""
-                    DELETE FROM comment
-                    WHERE id = %(id)s;
-                   """,
-                   {'id': id})
-
 
 @connection.connection_handler
 def delete_answers_by_question_id(cursor, q_id):
@@ -121,10 +134,9 @@ def save_new_question(cursor, title, message, view_number, vote_number):
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
-    })
+                        })
     new_question = cursor.fetchall()
     return new_question
-
 
 @connection.connection_handler
 def edit_question(cursor, q_id, title, message):
@@ -134,6 +146,8 @@ def edit_question(cursor, q_id, title, message):
                     WHERE id = %(q_id)s;
                    """,
                    {'q_id': q_id, 'title': title, 'message': message})
+
+
 
 
 @connection.connection_handler
@@ -148,47 +162,38 @@ def add_new_comment_for_question(cursor, question_id, message):
 
 
 @connection.connection_handler
-def get_question_comment(cursor, q_id):
+def get_question_comment(cursor):
     cursor.execute("""
                     SELECT * FROM comment
-                    WHERE question_id = %(q_id)s
-                    """,
-                   {'q_id': q_id})
+                    WHERE question_id IS NOT NULL
+                    """,)
     question_comments = cursor.fetchall()
     return question_comments
 
 
 @connection.connection_handler
+def get_answer_comment(cursor):
+    cursor.execute("""
+                    SELECT * FROM comment
+                    WHERE answer_id IS NOT NULL
+                    """,)
+    answer_comments = cursor.fetchall()
+    return answer_comments
+
+
+
+@connection.connection_handler
 def add_new_comment_for_answer(cursor, answer_id, message):
     cursor.execute("""
-                    INSERT INTO comment (answer_id, message, submission_time) 
-                    VALUES (%(answer_id)s, %(message)s, NOW());
+                    INSERT INTO comment (answer_id, message, submission_time, edited_count) 
+                    VALUES (%(answer_id)s, %(message)s, NOW(), 0)
+                    RETURNING id;
                    """, {
         "answer_id": answer_id,
         "message": message,
     })
-
-
-@connection.connection_handler
-def get_answer_comment(cursor, a_id):
-    cursor.execute("""
-                    SELECT * FROM comment
-                    WHERE answer_id = %(a_id)s;
-                    """,
-                   {'a_id': a_id})
-    answer_comments = cursor.fetchall()
-    return answer_comments
-
-@connection.connection_handler
-def get_answers_id(cursor, q_id):
-    cursor.execute("""
-                    SELECT id FROM answer
-                    WHERE id = %(q_id)s;
-                    """,{
-                    'q_id':q_id,
-                    })
-    answer_ids=cursor.fetchall()
-    return answer_ids
+    answer_comment = cursor.fetchall()
+    return answer_comment
 
 
 @connection.connection_handler
@@ -203,4 +208,23 @@ def add_new_answer(cursor, vote_number, question_id, message):
                        "question_id": question_id,
                        "message": message,
                    })
+
+@connection.connection_handler
+def edit_answer(cursor,a_id, message):
+    cursor.execute("""
+                    UPDATE answer
+                    SET message = %(message)s
+                    WHERE id = %(a_id)s;
+                   """,
+                   {'a_id': a_id, 'message': message})
+
+@connection.connection_handler
+def get_question_id_by_answer(cursor,a_id):
+    cursor.execute("""
+                    SELECT question_id FROM answer
+                    WHERE id = %(a_id)s;
+                   """,
+                   {'a_id': a_id})
+    q_id = cursor.fetchone()
+    return q_id['question_id']
 
