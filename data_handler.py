@@ -114,7 +114,7 @@ def delete_question_tag_connection(cursor, q_id):
                    """,
                    {'q_id': q_id})
 
-
+@connection.connection_handler
 def delete_question_comments(cursor, q_id):
     cursor.execute("""
                     DELETE FROM comment
@@ -148,13 +148,26 @@ def save_new_question(cursor, title, message, view_number, vote_number):
     return new_question
 
 @connection.connection_handler
-def edit_question(cursor,q_id, title, message):
+def edit_question(cursor, q_id, title, message):
     cursor.execute("""
                     UPDATE question
                     SET title = %(title)s, message = %(message)s
                     WHERE id = %(q_id)s;
                    """,
                    {'q_id': q_id, 'title': title, 'message': message})
+
+
+
+
+@connection.connection_handler
+def add_new_comment_for_question(cursor, question_id, message):
+    cursor.execute("""
+                    INSERT INTO comment (question_id, message, submission_time) 
+                    VALUES (%(question_id)s, %(message)s, NOW());
+                   """, {
+        "question_id": question_id,
+        "message": message,
+    })
 
 
 @connection.connection_handler

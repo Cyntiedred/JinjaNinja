@@ -60,6 +60,18 @@ def add_new_comment_question(q_id):
 ##### NEW COMMENT TO THE ANSWER
 
 
+@app.route('/answer/<a_id>/new-comment', methods=['GET', 'POST'])
+def add_new_comment_answer(a_id):
+    if request.method == 'GET':
+        return render_template('answer_comment.html', a_id=a_id)
+
+    message = request.form.get('message')
+    data_handler.add_new_comment_for_answer(a_id, message)
+    q_id = data_handler.get_question_id_by_answer(a_id)
+
+    return redirect(url_for('display_question', q_id=q_id))
+
+
 ##### NEW QUESTION IN GENERAL
 
 
@@ -106,7 +118,7 @@ def vote(q_id, vote):
 @app.route('/answer/<int:a_id>/vote-<string:vote>')
 def vote_for_answer(a_id, vote):
     data_handler.vote_for_answers(a_id, 1 if vote == 'up' else -1)
-    q_id = data_handler.get_question_id_by_answer(a_id)
+    q_id = data_handler.get_question_by_id(a_id)
     return redirect(url_for('display_question', q_id=q_id))
 
 
@@ -117,6 +129,13 @@ def delete(q_id):
     data_handler.delete_answers_by_question_id(q_id)
     data_handler.delete_question(q_id)
     return redirect(url_for('route_list'))
+
+
+@app.route('/comments/int:<q_id>/delete')
+def delete_question_comment(q_id):
+    data_handler.delete_question_comments(q_id)
+
+    return redirect(url_for('display_question', q_id=q_id))
 
 
 ##### EDIT QUESTION

@@ -38,7 +38,7 @@
     {% endfor %}
 </table>
 
-<h1 align="left"> Question Comments: </h1>
+<h1 align="center">Comments: </h1>
 <table width="50%" border="3" align="center">
     <tr>
         <th width="200px">Submission Time</th>
@@ -46,10 +46,11 @@
         <th>Edited Count</th>
     </tr>
     {% for comment in question_comments %}
-        <tr align="left">
+        <tr align="center">
             <td>{{ comment['submission_time'] }}</td>
             <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b></td>
             <td>It has been edited {{ comment.edited_count }} times.</td>
+            <td><b>{{ comment['message'] }}
         </tr>
     {% endfor %}
 </table>
@@ -71,7 +72,9 @@
     {% for answer in answers %}
         <tr align="center">
             <td>{{ answer.submission_time }}</td>
-            <td><b><a href = "{{ url_for('edit_answer', a_id = answer.id) }}">{{ answer.message }}</a></b></td>
+            <td><b>{{ answer.message }}<br>
+                <a href="{{ url_for('add_new_comment_answer', a_id=answer.id) }}">Add new comment</a>
+            </b></td>
             <td>{{ answer.vote_number }}<br>
                 <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up') }}">Vote up</a>
                 <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down') }}">Vote down</a>
@@ -88,21 +91,23 @@
     <button type="submit">Submit</button>
 </form>
 
-<h1 align="left"> Answer Comments: </h1>
+<h1 align="center"> Answer Comments: </h1>
 <table width="50%" border="3" align="center">
     <tr>
         <th width="200px">Submission Time</th>
         <th>Comment</th>
         <th>Edited Count</th>
     {% for comment in answer_comments %}
-        <tr align="left">
+        <tr align="center">
             <td>{{ comment['submission_time'] }}</td>
             <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b></td>
             <td>It has been edited {{ comment.edited_count }} times.</td>
         </tr>
     {% endfor %}
 </table>
-
+<form action="{{ url_for('add_new_comment_answer', a_id=a_id) }}"
+      method=get>
+    <br>
 
 </body>
 </html>
