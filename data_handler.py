@@ -172,11 +172,11 @@ def add_new_comment_for_answer(cursor, answer_id, message):
 @connection.connection_handler
 def get_answer_comment(cursor, a_id):
     cursor.execute("""
-                    SELECT question_id FROM comment
+                    SELECT * FROM comment
                     WHERE answer_id = %(a_id)s;
                     """,
                    {'a_id': a_id})
-    answer_comments = cursor.fetchone()
+    answer_comments = cursor.fetchall()
     return answer_comments
 
 @connection.connection_handler

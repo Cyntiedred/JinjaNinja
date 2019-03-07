@@ -46,7 +46,7 @@ def add_new_comment_answer(a_id):
 
     message = request.form.get('message')
     data_handler.add_new_comment_for_answer(a_id, message)
-    return redirect(url_for('answer_comment', a_id=a_id))
+    return redirect(url_for('add_new_comment_answer', a_id=a_id))
 
 
 @app.route('/answer/<a_id>/new-comment', methods=['GET', 'POST'])

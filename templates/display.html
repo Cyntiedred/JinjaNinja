@@ -73,7 +73,7 @@
         <tr align="center">
             <td>{{ answer.submission_time }}</td>
             <td><b>{{ answer.message }}
-                <form action="{{ url_for('add_new_comment_question', q_id=q_id) }}"
+                <form action="{{ url_for('add_new_comment_answer', a_id=a_id) }}"
                       method=get><p><input type=submit value="add a new comment"></p>
                 </form>
             </b></td>
