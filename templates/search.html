@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="content_wrap">
+        <table width="100%" border="5">
+            <tr>
+                <th>Submission Time</th>
+                <th>Title(Click to see the details)</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+
+
+            {% for phrase in found_content %}
+                <tr align="center">
+                    <td width="200"><a>{{ phrase.submission_time }}</a></td>
+                    <td><a href='/display/{{ phrase.id }}'>{{ phrase.title }}</a></td>
+                    <td><a href='/question/{{ phrase.id }}/edit'> Edit </a></td>
+                    <td><a href='/question/{{ phrase.id }}/delete'>Delete</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    </table>
+{% endblock %}

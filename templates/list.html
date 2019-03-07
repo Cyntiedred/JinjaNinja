@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ask Mate</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
 <h1>Ask Mate</h1>
 <h2>Sort Questions</h2>
     <br>
@@ -13,8 +9,8 @@
 
 <table width="100%" border="5">
         <tr>
+            <th width="200px">Submission Time</th>
             <th>Title(Click to see the details)</th>
-            <th>Answer</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -22,8 +18,8 @@
 
             {% for question in questions %}
                 <tr align="center">
+                    <td><a>{{ question.submission_time }}</a></td>
                     <td><a href = '/display/{{question.id}}'>{{ question.title }}</a></td>
-                    <td><a>Answer</a></td>
                     <td><a href = '/question/{{question.id}}/edit'> Edit </a></td>
                     <td><a href='/question/{{question.id}}/delete'>Delete</td>
                 </tr>
@@ -31,5 +27,4 @@
 
 
 </table>
-</body>
-</html>
+{% endblock %}

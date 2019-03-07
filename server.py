@@ -171,17 +171,35 @@ def edit_answer(a_id):
 
 @app.route('/answer/<int:a_id>/edit', methods=['POST'])
 def save_edited_answer(a_id):
-
     message = request.form.get('message')
     data_handler.edit_answer(a_id, message)
-    q_id = data_handler.get_question_id_by_answer(a_id)
+    q_id = data_handler.get_question_id_by_comment(c_id)
     return redirect(url_for('display_question', q_id=q_id))
 
-##### EDIT QUESTION COMMENT
 
-#@app.route('/answer/<int:a_id>/edit', methods=['POST'])
 
-##### EDIT ANSWER COMMENT
+##### EDIT COMMENT
+
+@app.route('/comment/<int:c_id>/edit', methods=['GET'])
+def edit_comment(c_id):
+    comment_by_id = data_handler.get_comment_by_id(c_id)
+    return render_template('edit_comment.html', c_id=c_id, comment_by_id=comment_by_id)
+
+
+@app.route('/comment/<int:c_id>/edit', methods=['POST'])
+def save_edited_comment(c_id):
+    edited_count_add = 1
+    message = request.form.get('message')
+    data_handler.edit_comment(c_id, edited_count_add, message)
+    q_id = data_handler.get_question_id_by_comment(c_id)
+    return redirect(url_for('display_question', q_id=q_id))
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_content():
+    searched__phrase = request.form.get('search_phrase')
+    found_content = data_handler.search_in_questions(searched__phrase)
+    return render_template('search.html', found_content=found_content)
 
 
 if __name__ == '__main__':

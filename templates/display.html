@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Question {{ id }}</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
+
 <h1>Question {{ id }}</h1>
 <form action="/">
     <input type="submit" value="Go back to the main menu"/>
@@ -43,10 +40,13 @@
     <tr>
         <th width="200px">Submission Time</th>
         <th>Comment</th>
+        <th>Edited Count</th>
     </tr>
     {% for comment in question_comments %}
         <tr align="center">
             <td>{{ comment['submission_time'] }}</td>
+            <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b></td>
+            <td>It has been edited {{ comment.edited_count }} times.</td>
             <td><b>{{ comment['message'] }}
         </tr>
     {% endfor %}
@@ -94,11 +94,12 @@
     <tr>
         <th width="200px">Submission Time</th>
         <th>Comment</th>
-    </tr>
+        <th>Edited Count</th>
     {% for comment in answer_comments %}
         <tr align="center">
             <td>{{ comment['submission_time'] }}</td>
-            <td><b>{{ comment['message'] }}</b></td>
+            <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b></td>
+            <td>It has been edited {{ comment.edited_count }} times.</td>
         </tr>
     {% endfor %}
 </table>
@@ -106,5 +107,5 @@
       method=get>
     <br>
 
-</body>
-</html>
+
+{% endblock %}

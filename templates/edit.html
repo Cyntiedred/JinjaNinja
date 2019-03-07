@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
+
     <h1>Edit Question {{ q_id }}</h1>
     <form action="{{ url_for('save_edited_question', q_id = q_id, question_by_id = question_by_id) }}"
           method=post enctype=multipart/form-data>
@@ -24,5 +21,4 @@
         {% endfor %}
     </form>
 
-</body>
-</html>
+{% endblock %}

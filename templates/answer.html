@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Post an answer</title>
-    <style>
-         .gap-15 {
-				width:100%;
-				height:15px;
-                    }
-    </style>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
+
     <form action="/">
         <input type="submit" value="Go back to the main menu" />
         <div class="gap-15"></div>
@@ -56,5 +47,4 @@
         </p>
         <button type="submit" >Submit</button>
     </form>
-</body>
-</html>
+{% endblock %}
