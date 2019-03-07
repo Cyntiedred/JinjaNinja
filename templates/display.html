@@ -43,11 +43,13 @@
     <tr>
         <th width="200px">Submission Time</th>
         <th>Comment</th>
+        <th>Edited Count</th>
     </tr>
     {% for comment in question_comments %}
         <tr align="left">
             <td>{{ comment['submission_time'] }}</td>
-            <td><b>{{ comment['message'] }}</b></td>
+            <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b></td>
+            <td>It has been edited {{ comment.edited_count }} times.</td>
         </tr>
     {% endfor %}
 </table>
@@ -91,11 +93,12 @@
     <tr>
         <th width="200px">Submission Time</th>
         <th>Comment</th>
-    </tr>
+        <th>Edited Count</th>
     {% for comment in answer_comments %}
         <tr align="left">
             <td>{{ comment['submission_time'] }}</td>
-            <td><b>{{ comment['message'] }}</b></td>
+            <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b></td>
+            <td>It has been edited {{ comment.edited_count }} times.</td>
         </tr>
     {% endfor %}
 </table>
