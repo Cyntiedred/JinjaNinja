@@ -13,7 +13,7 @@
 
 <table width="100%" border="5">
     <tr>
-        <th>Submission time</th>
+        <th>Submission Time</th>
         <th>Title(Click to see the details)</th>
         <th>Edit</th>
         <th>Delete</th>
@@ -31,5 +31,10 @@
 
 
 </table>
+<br>
+
+<form action="{{ url_for('route_list') }}">
+    <input type="submit" value="Show all questions!"/>
+</form>
 </body>
 </html>

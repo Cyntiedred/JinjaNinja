@@ -11,6 +11,17 @@ def select_all_questions(cursor):
 
 
 @connection.connection_handler
+def select_five_latest_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question 
+                    ORDER BY submission_time DESC 
+                    LIMIT 5;
+                   """, )
+    latest_questions = cursor.fetchall()
+    return latest_questions
+
+
+@connection.connection_handler
 def select_all_answers_by_id(cursor, q_id):
     cursor.execute("""
                     SELECT * FROM answer 
