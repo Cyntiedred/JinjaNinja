@@ -2,8 +2,8 @@
 
 {% block content %}
 
-    <h1>Edit Answer {{ a_id }}</h1>
-    <form action="{{ url_for('save_edited_answer', a_id = a_id, answer_by_id = answer_by_id) }}"
+    <h1>Edit Answer {{ c_id }}</h1>
+    <form action="{{ url_for('save_edited_comment', c_id = c_id, comment_by_id = comment_by_id) }}"
           method=post enctype=multipart/form-data>
         {% for comment  in comment_by_id %}
         <p>
