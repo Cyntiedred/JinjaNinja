@@ -47,7 +47,10 @@
     {% for comment in question_comments %}
         <tr align="center">
             <td>{{ comment['submission_time'] }}</td>
-            <td><b>{{ comment['message'] }}</b></td>
+            <td><b>{{ comment['message'] }}
+            <form action="{{ url_for('delete_question_comment', q_id=q_id) }}"
+            method=get><p><input type=submit value="delete"></p>
+            </b></td>
         </tr>
     {% endfor %}
 </table>
@@ -69,7 +72,11 @@
     {% for answer in answers %}
         <tr align="center">
             <td>{{ answer.submission_time }}</td>
-            <td><b>{{ answer.message }}</b></td>
+            <td><b>{{ answer.message }}
+                <form action="{{ url_for('add_new_comment_question', q_id=q_id) }}"
+                      method=get><p><input type=submit value="add a new comment"></p>
+                </form>
+            </b></td>
             <td>{{ answer.vote_number }}<br>
         </tr>
     {% endfor %}
@@ -85,5 +92,24 @@
 </form>
 
 
+
+<h1 align="center">Comments: </h1>
+<table width="50%" border="3" align="center">
+    <tr>
+        <th width="200px">Submission Time</th>
+        <th>Comment</th>
+    </tr>
+    {% for comment in answer_comments %}
+        <tr align="center">
+            <td>{{ comment['submission_time'] }}</td>
+            <td><b>{{ comment['message'] }}</b></td>
+        </tr>
+    {% endfor %}
+</table>
+<form action="{{ url_for('add_new_comment_answer', a_id=a_id) }}"
+      method=get>
+    <br>
+
+</form>
 </body>
 </html>

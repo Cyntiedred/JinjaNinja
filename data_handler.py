@@ -47,7 +47,6 @@ def get_answer_by_id(cursor, a_id):
     return answer_by_id
 
 
-
 @connection.connection_handler
 def update_view_number(cursor, q_id):
     cursor.execute("""
@@ -85,13 +84,21 @@ def delete_question_tag_connection(cursor, q_id):
                    """,
                    {'q_id': q_id})
 
-
+@connection.connection_handler
 def delete_question_comments(cursor, q_id):
     cursor.execute("""
                     DELETE FROM comment
                     WHERE question_id = %(q_id)s;
                    """,
                    {'q_id': q_id})
+
+@connection.connection_handler
+def new_delete_question_comments(cursor, id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id = %(id)s;
+                   """,
+                   {'id': id})
 
 
 @connection.connection_handler
@@ -114,18 +121,20 @@ def save_new_question(cursor, title, message, view_number, vote_number):
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
-                        })
+    })
     new_question = cursor.fetchall()
     return new_question
 
+
 @connection.connection_handler
-def edit_question(cursor,q_id, title, message):
+def edit_question(cursor, q_id, title, message):
     cursor.execute("""
                     UPDATE question
                     SET title = %(title)s, message = %(message)s
                     WHERE id = %(q_id)s;
                    """,
                    {'q_id': q_id, 'title': title, 'message': message})
+
 
 @connection.connection_handler
 def add_new_comment_for_question(cursor, question_id, message):
@@ -152,15 +161,34 @@ def get_question_comment(cursor, q_id):
 @connection.connection_handler
 def add_new_comment_for_answer(cursor, answer_id, message):
     cursor.execute("""
-                    INSERT INTO comment (answer_id, message, submission_time, edited_count) 
-                    VALUES (%(answer_id)s, %(message)s, NOW(), 0)
-                    RETURNING id;
+                    INSERT INTO comment (answer_id, message, submission_time) 
+                    VALUES (%(answer_id)s, %(message)s, NOW());
                    """, {
         "answer_id": answer_id,
         "message": message,
     })
-    answer_comment = cursor.fetchall()
-    return answer_comment
+
+
+@connection.connection_handler
+def get_answer_comment(cursor, a_id):
+    cursor.execute("""
+                    SELECT question_id FROM comment
+                    WHERE answer_id = %(a_id)s;
+                    """,
+                   {'a_id': a_id})
+    answer_comments = cursor.fetchone()
+    return answer_comments
+
+@connection.connection_handler
+def get_answers_id(cursor, q_id):
+    cursor.execute("""
+                    SELECT id FROM answer
+                    WHERE id = %(q_id)s;
+                    """,{
+                    'q_id':q_id,
+                    })
+    answer_ids=cursor.fetchall()
+    return answer_ids
 
 
 @connection.connection_handler
@@ -176,33 +204,3 @@ def add_new_answer(cursor, vote_number, question_id, message):
                        "message": message,
                    })
 
-
-'''
-
-
-
-def edit_answer(table, id, edited_answer):
-    with open('temporary.csv', 'a') as csvfile:
-        fieldnames = DATA_HEADER_QUESTION
-        fieldnamewriter = csv.writer(csvfile)
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        fieldnamewriter.writerow(fieldnames)
-        for i in range(id-1):
-            writer.writerow(table[i])
-        writer.writerow(edited_answer)
-        for i in range(id, len(table)):
-            writer.writerow(table[i])
-        os.remove('answer.csv')
-        os.rename("temporary.csv",'answer.csv')
-
-
-def add_submisson():
-    return SUBMISSION_TIME
-
-def add_question_to_file(story):
-
-    with open('question.csv', 'a', newline='', encoding='utf-8') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER_QUESTION)
-        writer.writerow(story)
-
-'''
