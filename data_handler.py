@@ -174,6 +174,7 @@ def add_new_comment_for_answer(cursor, answer_id, message):
     return answer_comment
 
 
+
 @connection.connection_handler
 def add_new_answer(cursor, vote_number, question_id, message):
     cursor.execute("""
@@ -187,6 +188,24 @@ def add_new_answer(cursor, vote_number, question_id, message):
                        "message": message,
                    })
 
+@connection.connection_handler
+def edit_answer(cursor,a_id, message):
+    cursor.execute("""
+                    UPDATE answer
+                    SET message = %(message)s
+                    WHERE id = %(a_id)s;
+                   """,
+                   {'a_id': a_id, 'message': message})
+
+@connection.connection_handler
+def get_question_id_by_answer(cursor,a_id):
+    cursor.execute("""
+                    SELECT question_id FROM answer
+                    WHERE id = %(a_id)s;
+                   """,
+                   {'a_id': a_id})
+    q_id = cursor.fetchone()
+    return q_id['question_id']
 
 '''
 
