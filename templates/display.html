@@ -71,6 +71,7 @@
             <td>{{ answer.submission_time }}</td>
             <td><b>{{ answer.message }}<br>
                 <a href="{{ url_for('add_new_comment_answer', a_id=answer.id) }}">Add new comment</a>
+                <a href="{{ url_for('delete_answer_comment', a_id=answer.id) }}">Delete comment</a>
             </b></td>
             <td>{{ answer.vote_number }}<br>
                 <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up') }}">Vote up</a>

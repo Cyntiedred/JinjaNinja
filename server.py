@@ -137,6 +137,12 @@ def delete_question_comment(q_id):
 
     return redirect(url_for('display_question', q_id=q_id))
 
+@app.route('/comments/int:<a_id>/delete')
+def delete_answer_comment(a_id):
+    data_handler.delete_answer_comments(a_id)
+
+    return redirect(url_for('display_question', a_id=a_id))
+
 
 ##### EDIT QUESTION
 
