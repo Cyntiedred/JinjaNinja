@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application process</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+{% block search_bar %}
+    <div class="topnav">
+        <a href="{{ url_for('route_list') }}">Home</a>
+        <a href="{{ url_for('ask_new_question') }}">Ask New Question</a>
+        <form action="/search" method="post">
+            <input name="search_phrase" id="message" type="text" placeholder="Search...">
+        </form>
+    </div>
+
+
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+</body>
+</html>
+

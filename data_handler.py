@@ -58,7 +58,6 @@ def get_answer_by_id(cursor, a_id):
     return answer_by_id
 
 
-
 @connection.connection_handler
 def update_view_number(cursor, q_id):
     cursor.execute("""
@@ -125,18 +124,20 @@ def save_new_question(cursor, title, message, view_number, vote_number):
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
-                        })
+    })
     new_question = cursor.fetchall()
     return new_question
 
+
 @connection.connection_handler
-def edit_question(cursor,q_id, title, message):
+def edit_question(cursor, q_id, title, message):
     cursor.execute("""
                     UPDATE question
                     SET title = %(title)s, message = %(message)s
                     WHERE id = %(q_id)s;
                    """,
                    {'q_id': q_id, 'title': title, 'message': message})
+
 
 @connection.connection_handler
 def add_new_comment_for_question(cursor, question_id, message):
@@ -174,7 +175,6 @@ def add_new_comment_for_answer(cursor, answer_id, message):
     return answer_comment
 
 
-
 @connection.connection_handler
 def add_new_answer(cursor, vote_number, question_id, message):
     cursor.execute("""
@@ -188,8 +188,9 @@ def add_new_answer(cursor, vote_number, question_id, message):
                        "message": message,
                    })
 
+
 @connection.connection_handler
-def edit_answer(cursor,a_id, message):
+def edit_answer(cursor, a_id, message):
     cursor.execute("""
                     UPDATE answer
                     SET message = %(message)s
@@ -197,8 +198,9 @@ def edit_answer(cursor,a_id, message):
                    """,
                    {'a_id': a_id, 'message': message})
 
+
 @connection.connection_handler
-def get_question_id_by_answer(cursor,a_id):
+def get_question_id_by_answer(cursor, a_id):
     cursor.execute("""
                     SELECT question_id FROM answer
                     WHERE id = %(a_id)s;
@@ -206,6 +208,19 @@ def get_question_id_by_answer(cursor,a_id):
                    {'a_id': a_id})
     q_id = cursor.fetchone()
     return q_id['question_id']
+
+
+@connection.connection_handler
+def search_in_questions(cursor, message):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title ILIKE %(message)s OR message ILIKE %(message)s;
+                    """,
+                   {
+                       'message': "%" + message + "%",
+                   })
+    found_question = cursor.fetchall()
+    return found_question
 
 '''
 

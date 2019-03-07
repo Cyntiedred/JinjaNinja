@@ -11,7 +11,6 @@ def show_five_latest_questions():
     return render_template('five_latest_questions.html', questions=latest_questions)
 
 
-
 @app.route('/list')
 def route_list():
     questions = data_handler.select_all_questions()
@@ -105,22 +104,25 @@ def save_edited_question(q_id):
     return redirect(url_for('route_list'))
 
 
-
-
 @app.route('/answer/<int:a_id>/edit', methods=['GET'])
 def edit_answer(a_id):
     answer_by_id = data_handler.get_answer_by_id(a_id)
     return render_template('edit_answer.html', a_id=a_id, answer_by_id=answer_by_id)
 
 
-
 @app.route('/answer/<int:a_id>/edit', methods=['POST'])
 def save_edited_answer(a_id):
-
     message = request.form.get('message')
     data_handler.edit_answer(a_id, message)
     q_id = data_handler.get_question_id_by_answer(a_id)
     return redirect(url_for('display_question', q_id=q_id))
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_content():
+    searched__phrase = request.form.get('search_phrase')
+    found_content = data_handler.search_in_questions(searched__phrase)
+    return render_template('search.html', found_content=found_content)
 
 
 if __name__ == '__main__':

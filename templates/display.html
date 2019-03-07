@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Question {{ id }}</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
+
 <h1>Question {{ id }}</h1>
 <form action="/">
     <input type="submit" value="Go back to the main menu"/>
@@ -85,5 +82,5 @@
 </form>
 
 
-</body>
-</html>
+
+{% endblock %}
