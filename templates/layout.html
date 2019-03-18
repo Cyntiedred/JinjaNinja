@@ -8,7 +8,7 @@
 <body>
 {% block search_bar %}
     <div class="topnav">
-        <a href="{{ url_for('route_list') }}">Home</a>
+        <a href="{{ url_for('show_five_latest_questions') }}">Home</a>
         <a href="{{ url_for('ask_new_question') }}">Ask New Question</a>
         <form action="/search" method="post">
             <input name="search_phrase" id="message" type="text" placeholder="Search...">
