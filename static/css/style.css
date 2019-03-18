@@ -51,3 +51,22 @@
 .content_wrap{
     padding: 10px;
 }
+
+body{
+    background-color: grey;
+
+}
+
+table{
+    background-color: lightgrey;
+    color: black;
+}
+
+th{
+    color: darkblue;
+}
+
+h1{
+    color: darkblue;
+    text-align: center;
+}
