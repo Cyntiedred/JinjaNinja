@@ -183,7 +183,7 @@ def edit_answer(a_id):
 def save_edited_answer(a_id):
     message = request.form.get('message')
     data_handler.edit_answer(a_id, message)
-    q_id = data_handler.get_question_id_by_comment(c_id)
+    q_id = data_handler.get_question_id_by_answer(a_id)
     return redirect(url_for('display_question', q_id=q_id))
 
 

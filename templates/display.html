@@ -69,7 +69,7 @@
     {% for answer in answers %}
         <tr align="center">
             <td>{{ answer.submission_time }}</td>
-            <td><b>{{ answer.message }}<br>
+            <td><a href="{{ url_for('edit_answer', a_id=answer.id) }}">{{ answer.message }}"</a><br>
                 <a href="{{ url_for('add_new_comment_answer', a_id=answer.id) }}">Add new comment</a>
             </b></td>
             <td>{{ answer.vote_number }}<br>
