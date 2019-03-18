@@ -118,7 +118,7 @@ def vote(q_id, vote):
 @app.route('/answer/<int:a_id>/vote-<string:vote>')
 def vote_for_answer(a_id, vote):
     data_handler.vote_for_answers(a_id, 1 if vote == 'up' else -1)
-    q_id = data_handler.get_question_by_id(a_id)
+    q_id = data_handler.get_question_id_by_answer(a_id)
     return redirect(url_for('display_question', q_id=q_id))
 
 
