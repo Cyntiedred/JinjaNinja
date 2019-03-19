@@ -57,8 +57,9 @@ def get_question_by_id(cursor, q_id):
     question_by_id = cursor.fetchall()
     return question_by_id
 
+
 @connection.connection_handler
-def get_comment_by_id(cursor,c_id):
+def get_comment_by_id(cursor, c_id):
     cursor.execute("""
                     SELECT * FROM comment
                     WHERE id = %(c_id)s
@@ -85,6 +86,7 @@ def vote_for_questions(cursor, q_id, vote):
                     WHERE id = %(q_id)s;
                    """,
                    {'q_id': q_id, 'vote': vote})
+
 
 @connection.connection_handler
 def vote_for_answers(cursor, a_id, vote):
@@ -114,6 +116,7 @@ def delete_question_tag_connection(cursor, q_id):
                    """,
                    {'q_id': q_id})
 
+
 @connection.connection_handler
 def delete_question_comments(cursor, q_id):
     cursor.execute("""
@@ -131,6 +134,7 @@ def delete_answer_comments(cursor, a_id):
                    """,
                    {'a_id': a_id})
 
+
 @connection.connection_handler
 def delete_comments(cursor, c_id):
     cursor.execute("""
@@ -138,6 +142,7 @@ def delete_comments(cursor, c_id):
                     WHERE id = %(c_id)s;
                    """,
                    {'c_id': c_id})
+
 
 @connection.connection_handler
 def delete_answers_by_question_id(cursor, q_id):
@@ -190,7 +195,7 @@ def get_question_comment(cursor):
     cursor.execute("""
                     SELECT * FROM comment
                     WHERE question_id IS NOT NULL
-                    """,)
+                    """, )
     question_comments = cursor.fetchall()
     return question_comments
 
@@ -200,10 +205,9 @@ def get_answer_comment(cursor):
     cursor.execute("""
                     SELECT * FROM comment
                     WHERE answer_id IS NOT NULL
-                    """,)
+                    """, )
     answer_comments = cursor.fetchall()
     return answer_comments
-
 
 
 @connection.connection_handler
@@ -229,7 +233,6 @@ def add_new_comment_for_question(cursor, question_id, message):
         "question_id": question_id,
         "message": message,
     })
-
 
 
 @connection.connection_handler
@@ -285,10 +288,8 @@ def search_in_questions_and_answers(cursor, message):
     return found_question
 
 
-
 @connection.connection_handler
-def get_question_id_by_comment(cursor,c_id):
-
+def get_question_id_by_comment(cursor, c_id):
     cursor.execute("""
                     SELECT question_id, answer_id FROM comment
                     WHERE id = %(c_id)s;
@@ -306,10 +307,8 @@ def get_question_id_by_comment(cursor,c_id):
     return q_id['question_id']
 
 
-
-
 @connection.connection_handler
-def edit_comment(cursor,c_id, edited_count_add, message):
+def edit_comment(cursor, c_id, edited_count_add, message):
     cursor.execute("""
                     UPDATE comment
                     SET edited_count = edited_count+%(edited_count_add)s, message = %(message)s, submission_time = NOW()
@@ -318,3 +317,14 @@ def edit_comment(cursor,c_id, edited_count_add, message):
                    {'c_id': c_id, 'edited_count_add': edited_count_add, 'message': message})
 
 
+@connection.connection_handler
+def register_a_new_user(cursor, user_name, email, password):
+    cursor.execute("""
+                    INSERT INTO users (user_name, email, password)
+                    VALUES (%(user_name)s, %(email)s, %(password)s)
+                    """,
+                   {
+                       "user_name": user_name,
+                       "email": email,
+                       "password": password,
+                   })

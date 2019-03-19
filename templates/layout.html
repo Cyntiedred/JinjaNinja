@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Application process</title>
+    <title>Ask Mate</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -14,7 +14,7 @@
             <input name="search_phrase" id="message" type="text" placeholder="Search...">
         </form>
         <a href="" class="login">Login</a>
-        <a href="" class="register">Register</a>
+        <a href="{{ url_for('registration') }}" class="register">Register</a>
     </div>
 
 

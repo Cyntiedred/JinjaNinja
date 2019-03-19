@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 import data_handler
+import password
 
 app = Flask(__name__)
 
@@ -209,6 +210,23 @@ def search_content():
     searched__phrase = request.form.get('search_phrase')
     found_content = data_handler.search_in_questions_and_answers(searched__phrase)
     return render_template('search.html', found_content=found_content)
+
+
+@app.route('/registration/', methods=['GET', 'POST'])
+def registration():
+    if request.method == "POST":
+        user_name = request.form.get('user_name')
+        email = request.form.get('email')
+        pass1 = request.form.get('pass1')
+        pass2 = request.form.get('pass2')
+        if pass1 == pass2:
+            hashed_pass = password.hash_password(pass1)
+            data_handler.register_a_new_user(user_name, email, hashed_pass)
+            return redirect(url_for('show_five_latest_questions'))
+        else:
+            return render_template('registration.html')
+
+    return render_template('registration.html')
 
 
 if __name__ == '__main__':

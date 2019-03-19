@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
+{% extends "layout.html" %}
 
-</body>
-</html>
+{% block content %}
+
+    <h1>Registration</h1>
+
+    <form name="registration" action="{{ url_for('registration') }}"
+          method=post>
+        <div class="gap-15"></div>
+        <br>
+        <br><h4></h4><br>
+        <p>
+            <label for="user_name">User Name</label><br>
+            <br><input required type="text" placeholder="User Name" name="user_name" cols="40" rows="4">
+        </p>
+        <p>
+            <label for="email">Email address</label><br>
+            <br><input required type="email" placeholder="example@example.com" name="email" cols="40" rows="4">
+        </p>
+        <p>
+            <label for="password">Password</label><br>
+            <br><input required type="password" placeholder="Password..." name="pass1" cols="40" rows="4">
+        </p>
+        <p>
+            <label for="confirm_password">Confirm Password</label><br>
+            <br><input required type="password" placeholder="Confirm password..." name="pass2" cols="40" rows="4">
+        </p>
+        <p>
+            <input type="submit" onclick="check_pass()" value="Register">
+        </p>
+        <script>
+            function check_pass() {
+                let x = document.forms['registration']['pass1'].value;
+                let y = document.forms['registration']['pass2'].value;
+                if (x !== y) {
+                    alert("Passwords are different and U re gAy")
+                    return false;
+                }
+            }
+        </script>
+    </form>
+
+
+
+{% endblock %}
