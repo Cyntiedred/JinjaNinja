@@ -229,6 +229,28 @@ def registration():
     return render_template('registration.html')
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        email = request.form.get('email')
+        pass1 = request.form.get('pass1')
+        hashed_pass_from_database = data_handler.get_user_info_to_login(email)
+
+        if hashed_pass_from_database != False:
+            verification = password.verify_password(pass1, hashed_pass_from_database)
+
+            if verification == True:
+                return redirect(url_for('show_five_latest_questions'))
+            else:
+                text = "False user name or password. Try again!"
+                return render_template('login.html', text=text)
+
+        text = "False user name or password. Try again!"
+        return render_template('login.html', text=text)
+
+    return render_template('login.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

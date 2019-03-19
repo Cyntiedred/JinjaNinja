@@ -328,3 +328,28 @@ def register_a_new_user(cursor, user_name, email, password):
                        "email": email,
                        "password": password,
                    })
+
+
+@connection.connection_handler
+def get_all_emails(cursor):
+    cursor.execute("""
+                    SELECT email
+                    FROM users
+                    """)
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_user_info_to_login(cursor, email):
+    cursor.execute("""
+                    SELECT password FROM users
+                    WHERE email ILIKE %(email)s;
+                    """,
+                   {
+                       "email": email,
+                   })
+    try:
+        password = cursor.fetchone()['password']
+        return password
+    except:
+        return False
