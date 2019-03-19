@@ -207,7 +207,7 @@ def save_edited_comment(c_id):
 @app.route('/search', methods=['GET', 'POST'])
 def search_content():
     searched__phrase = request.form.get('search_phrase')
-    found_content = data_handler.search_in_questions(searched__phrase)
+    found_content = data_handler.search_in_questions_and_answers(searched__phrase)
     return render_template('search.html', found_content=found_content)
 
 

@@ -70,3 +70,7 @@ h1{
     color: darkblue;
     text-align: center;
 }
+.topnav .login,
+.topnav .register{
+    float: right;
+}

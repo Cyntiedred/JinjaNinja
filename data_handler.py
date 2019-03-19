@@ -268,10 +268,15 @@ def get_question_id_by_answer(cursor, a_id):
 
 
 @connection.connection_handler
-def search_in_questions(cursor, message):
+def search_in_questions_and_answers(cursor, message):
     cursor.execute("""
-                    SELECT * FROM question
-                    WHERE title ILIKE %(message)s OR message ILIKE %(message)s;
+                    SELECT *
+                    FROM question
+                    FULL JOIN answer
+                        ON question.id = answer.question_id
+                    WHERE title ILIKE %(message)s 
+                        OR question.message ILIKE %(message)s
+                        OR answer.message ILIKE %(message)s;
                     """,
                    {
                        'message': "%" + message + "%",
