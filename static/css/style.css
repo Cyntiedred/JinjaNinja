@@ -75,6 +75,22 @@ h1{
     float: right;
 }
 
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
 
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -145,4 +161,55 @@ body {font-family: Arial, Helvetica, sans-serif;}
   padding: 2px 16px;
   background-color: grey;
   color: white;
+}
+
+.title_registration{
+    font-size: 40px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.registration_form {
+    background-color: lightgrey;
+    color: black;
+    width: 35%;
+    float: initial;
+    padding: 16px;
+    margin: 5% 10% 5% 27%;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 20px 4px black;
+}
+
+.username{
+  width: 60%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+input[type=email], input[type=password] {
+  width: 60%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.button {
+  background-color: #2290ab;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  width: 60%;
+}
+
+.button:hover {
+  opacity: 0.8;
 }

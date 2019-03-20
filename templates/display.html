@@ -25,8 +25,9 @@
             <td>{{ question.view_number }}</td>
             <td>
                 {{ question.vote_number }}<br>
-                <a href="{{ url_for('vote', q_id=question.id, vote='up') }}">Vote Up</a><br>
-                <a href="{{ url_for('vote', q_id=question.id, vote='down') }}">Vote Down</a><br>
+                <a href="{{ url_for('vote', q_id=question.id, vote='up') }}"><p><i class="up"></i></p></a>
+                <a href="{{ url_for('vote', q_id=question.id, vote='down') }}"><p><i class="down"></i></p></a>
+
             </td>
             <td>{{ question.title }}</td>
             <td>{{ question.message }}</td>
@@ -36,7 +37,7 @@
 </table>
 
 <h1 align="left"> Question Comments: </h1>
-<table width="50%" border="3" align="center">
+<table width="50%" border="3" align="right">
     <tr>
         <th width="200px">Submission Time</th>
         <th>Comment</th>
@@ -73,8 +74,8 @@
                 <a href="{{ url_for('add_new_comment_answer', a_id=answer.id) }}">Add new comment</a>
             </b></td>
             <td>{{ answer.vote_number }}<br>
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up') }}">Vote up</a>
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down') }}">Vote down</a>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up') }}"><p><i class="up"></i></p></a>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down') }}"><p><i class="down"></i></p></a>
         </tr>
     {% endfor %}
 </table>

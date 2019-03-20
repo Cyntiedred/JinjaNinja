@@ -2,27 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Ask Mate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
- <h1>Login</h1>
- <h2>{{ text }}</h2>
 
-    <form name="login" action="{{ url_for('login') }}"
+ <br><h2>{{ text }}</h2>
+
+    <form class="login" name="login" action="{{ url_for('login') }}"
           method=post>
         <div class="gap-15"></div>
-        <br>
-        <br><h4></h4><br>
+        <h2 class="title_login">Login</h2>
         <p>
-            <label for="email">Email address</label><br>
+            <label for="email"><b>Email address</b></label><br>
             <br><input required type="email" placeholder="example@example.com" name="email" cols="40" rows="4">
         </p>
         <p>
-            <label for="password">Password</label><br>
+            <label for="password"><b>Password</b></label><br>
             <br><input required type="password" placeholder="Password..." name="pass1" cols="40" rows="4">
         </p>
 
-            <input type="submit"  value="Login">
+            <input class="button" type="submit"  value="Login">
         </p>
 
     </form>

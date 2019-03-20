@@ -1,0 +1,57 @@
+body{
+    background-color: grey;
+
+}
+
+.title_login{
+    font-size: 40px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+p{
+    font-size: 20px;
+
+}
+
+.login {
+    background-color: lightgrey;
+    color: black;
+    width: 40%;
+    float: initial;
+    padding: 16px;
+    margin-top: 10%;
+    text-align: center;
+    margin-left: 29%;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 20px 4px black;
+}
+
+input[type=email], input[type=password] {
+  width: 60%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.button {
+  background-color: #2290ab;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  width: 60%;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+

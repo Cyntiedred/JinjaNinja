@@ -2,31 +2,29 @@
 
 {% block content %}
 
-    <h1>Registration</h1>
 
-    <form name="registration" action="{{ url_for('registration') }}"
+    <form class="registration_form" name="registration" action="{{ url_for('registration') }}"
           method=post>
-        <div class="gap-15"></div>
         <br>
-        <br><h4></h4><br>
+       <h4 class="title_registration">Registration</h4>
         <p>
-            <label for="user_name">User Name</label><br>
-            <br><input required type="text" placeholder="User Name" name="user_name" cols="40" rows="4">
+            <label for="user_name"><b>User Name</b></label><br>
+            <br><input required class="username" type="text" placeholder="User Name" name="user_name" cols="40" rows="4">
         </p>
         <p>
-            <label for="email">Email address</label><br>
+            <label for="email"><b>Email address</b></label><br>
             <br><input required type="email" placeholder="example@example.com" name="email" cols="40" rows="4">
         </p>
         <p>
-            <label for="password">Password</label><br>
+            <label for="password"><b>Password</b></label><br>
             <br><input required type="password" placeholder="Password..." name="pass1" cols="40" rows="4">
         </p>
         <p>
-            <label for="confirm_password">Confirm Password</label><br>
+            <label for="confirm_password"><b>Confirm Password</b></label><br>
             <br><input required type="password" placeholder="Confirm password..." name="pass2" cols="40" rows="4">
         </p>
         <p>
-            <input type="submit" onclick="check_pass()" value="Register">
+            <input class="button" type="submit" onclick="check_pass()" value="Register">
         </p>
         <script>
             function check_pass() {
