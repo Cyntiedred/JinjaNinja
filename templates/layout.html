@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Ask Mate</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% if script %}
+        <script src="{{ url_for('static', filename = 'javascript/modal.js') }}"></script>
+    {% endif %}
 </head>
 <body>
 {% block search_bar %}
@@ -13,12 +16,35 @@
         <form action="/search" method="post">
             <input name="search_phrase" id="message" type="text" placeholder="Search...">
         </form>
-        <a href="{{ url_for('login') }}" class="login">Login</a>
-        <a href="{{ url_for('registration') }}" class="register">Register</a>
+        {% if anti_popup == False or script == False %}
+            <a href="{{ url_for('logout') }}" class="login">{{ user_name }}</a>
+        {% elif anti_popup == True or script == True %}
+            <a href="{{ url_for('login') }}" class="login">Login</a>
+            <a href="{{ url_for('registration') }}" class="register">Register</a>
+        {% endif %}
     </div>
 
 
 {% endblock %}
+{% if script %}
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>You are not logged in!</h2>
+            </div>
+            <div class="modal-body">
+                <p>Please log in or register</p>
+            </div>
+            <div class="modal-footer">
+                <input type="button" onclick="location.href='{{ url_for('registration') }}'" value="Register">
+                <input type="button" onclick="location.href='{{ url_for('login') }}'" value="Login">
+            </div>
+        </div>
+
+    </div>
+{% endif %}
 
 {% block content %}
 {% endblock %}
