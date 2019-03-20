@@ -353,3 +353,23 @@ def get_user_info_to_login(cursor, email):
         return password
     except:
         return False
+
+
+@connection.connection_handler
+def get_user_by_email(cursor, email):
+    cursor.execute("""
+                    SELECT user_name FROM users
+                    WHERE email = %(email)s;
+                     """,
+                   {
+                       "email": email,
+                   })
+    return cursor.fetchone()['user_name']
+
+@connection.connection_handler
+def get_all_user_data(cursor):
+    cursor.execute("""
+                    SELECT * FROM users
+                     """,)
+    users_data = cursor.fetchall()
+    return users_data

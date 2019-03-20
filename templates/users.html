@@ -2,8 +2,7 @@
 
 {% block content %}
 
-<h1> {{ username }}</h1>
-
+    <h1>All user</h1>
 
 <table width="100%" border="5">
     <tr align="center">
@@ -15,10 +14,9 @@
     {% for data in users_data %}
         <tr align="center">
             <td>{{ data.id }}</td>
-            <td>{{ data.username }}</td>
+            <td>{{ data.user_name }}</td>
             <td>{{ data.email }}</td>
             <td>{{ data.reputation }}</td>
-            <td>{{ question.message }}</td>
         </tr>
     {% endfor %}
 </table>
