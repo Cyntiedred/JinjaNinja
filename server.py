@@ -211,6 +211,9 @@ def search_content():
     found_content = data_handler.search_in_questions_and_answers(searched__phrase)
     return render_template('search.html', found_content=found_content)
 
+############################### REGISTRATION AND LOGIN STUFF ############################################
+
+
 
 @app.route('/registration/', methods=['GET', 'POST'])
 def registration():
@@ -236,10 +239,10 @@ def login():
         pass1 = request.form.get('pass1')
         hashed_pass_from_database = data_handler.get_user_info_to_login(email)
 
-        if hashed_pass_from_database != False:
+        if hashed_pass_from_database:
             verification = password.verify_password(pass1, hashed_pass_from_database)
 
-            if verification == True:
+            if verification:
                 return redirect(url_for('show_five_latest_questions'))
             else:
                 text = "False user name or password. Try again!"
