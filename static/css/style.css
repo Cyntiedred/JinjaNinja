@@ -67,7 +67,7 @@ th{
 }
 
 h1{
-    color: darkblue;
+    color: black;
     text-align: center;
 }
 .topnav .login,
@@ -175,7 +175,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     width: 35%;
     float: initial;
     padding: 16px;
-    margin: 5% 10% 5% 27%;
+    margin: 5% 10% 5% 28%;
     text-align: center;
     border: 1px solid #ccc;
     box-shadow: 0 0 20px 4px black;
@@ -232,6 +232,13 @@ input[type=email], input[type=password] {
 .question_title{
     text-align: center;
     font-size: 40px;
+
+}
+
+.Question{
+   text-align: center;
+   font-size: 40px;
+   margin-right: 5%;
 }
 
 .question_submission_time{
@@ -253,18 +260,20 @@ input[type=email], input[type=password] {
   float:left;
 }
 
-.question_comment_css{
+.display_css .question_comment_css{
     padding:10px;
-    width: 32%;
-    float:right;
+    margin-left: 10%;
+    width: 60%;
 }
-
 
 .question_comment{
     text-align: center;
 
 }
 
+.display_css .comment_delete{
+    margin-left: 50%;
+}
 
 .comment_submission_time{
     float:left;
@@ -272,8 +281,9 @@ input[type=email], input[type=password] {
 }
 
 .answer_css{
-    float:left;
-    width: 100%;
+    width: 50%;
+    padding:30px;
+    margin-left: 20%;
     text-align: center;
 }
 
@@ -283,9 +293,8 @@ input[type=email], input[type=password] {
 
 .answer_vote_number{
   width: 20px;
-  margin-left: 25%;
-  margin-top: -5%;
-  font-size: 18px;
+  margin-right: 15%;
+  margin-top: -15%;
   float:left;
 }
 
@@ -295,20 +304,38 @@ input[type=email], input[type=password] {
 }
 .new_answer{
   float:left;
-  width: 80%;
-  margin-left: 25%;
+  color: black;
+  width: 70%;
+  margin-left: 10%;
   margin-bottom: 2%;
 }
 
 .answer_comment_css{
-  float:left;
-  text-align: center;
+  float:right;
   margin-left: 10%;
-  width: 80%;
+  text-align: center;
+  font-size: 14px;
+  width: 50%;
 }
 
-.answer_css-answer_comment_message{
+.answer_css .answer_comment_message{
   float:right;
-  font-size: 16px;
-  margin-right: 20%;
+  text-align: center;
+  margin-left: 5%;
+  font-size: 14px;
+  width: 40%;
+}
+
+.display_css{
+    width: 60%;
+    padding-top: 2%;
+    margin-top: 2%;
+    background-color: #cccccc;
+    margin-left: 20%;
+
+}
+
+.Answer{
+   margin-right: 5%;
+   color: black;
 }
