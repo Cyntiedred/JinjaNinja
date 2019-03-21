@@ -4,8 +4,8 @@ import connection
 @connection.connection_handler
 def select_all_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question ORDER BY id;
-                   """, )
+                    SELECT * FROM question;
+                    """, )
     questions = cursor.fetchall()
     return questions
 
@@ -24,7 +24,16 @@ def select_five_latest_questions(cursor):
 @connection.connection_handler
 def select_all_answers_by_id(cursor, q_id):
     cursor.execute("""
-                    SELECT * FROM answer 
+                    SELECT 
+                    answer.id,
+                    answer.submission_time,
+                     answer.vote_number,
+                     answer.question_id,
+                     answer.message,
+                     answer.image,
+                     users.user_name
+                     FROM answer 
+                     INNER JOIN users ON answer.user_id = users.id
                     WHERE question_id = %(q_id)s
                     ORDER BY vote_number DESC,
                             submission_time DESC;
@@ -50,8 +59,17 @@ def get_answer_by_id(cursor, a_id):
 @connection.connection_handler
 def get_question_by_id(cursor, q_id):
     cursor.execute("""
-                    SELECT * FROM question
-                    WHERE id = %(q_id)s
+                    SELECT question.id,
+                    question.submission_time,
+                    question.view_number,
+                    question.vote_number,
+                    question.title,
+                    question.message,
+                    question.image,
+                    users.user_name
+                    FROM question
+                    INNER JOIN users ON question.user_id = users.id
+                    WHERE question.id = %(q_id)s
                     """,
                    {'q_id': q_id})
     question_by_id = cursor.fetchall()
@@ -154,16 +172,17 @@ def delete_answers_by_question_id(cursor, q_id):
 
 
 @connection.connection_handler
-def save_new_question(cursor, title, message, view_number, vote_number):
+def save_new_question(cursor, title, message, view_number, vote_number, user_id):
     cursor.execute("""
-                    INSERT INTO question (submission_time, title,  message, view_number, vote_number) 
-                    VALUES (NOW(), %(title)s, %(message)s, %(view_number)s, %(vote_number)s)
+                    INSERT INTO question (submission_time, title,  message, view_number, vote_number, user_id) 
+                    VALUES (NOW(), %(title)s, %(message)s, %(view_number)s, %(vote_number)s, %(user_id)s)
                     RETURNING id;
                    """, {
         "title": title,
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
+        "user_id":user_id,
     })
     new_question = cursor.fetchall()
     return new_question
@@ -193,7 +212,15 @@ def add_new_comment_for_question(cursor, question_id, message):
 @connection.connection_handler
 def get_question_comment(cursor):
     cursor.execute("""
-                    SELECT * FROM comment
+                    SELECT comment.id,
+                     comment.question_id,
+                     comment.answer_id,
+                     comment.message,
+                     comment.submission_time,
+                     comment.edited_count,
+                     users.user_name
+                     FROM comment
+                     INNER JOIN users ON comment.user_id = users.id
                     WHERE question_id IS NOT NULL
                     """, )
     question_comments = cursor.fetchall()
@@ -203,7 +230,15 @@ def get_question_comment(cursor):
 @connection.connection_handler
 def get_answer_comment(cursor):
     cursor.execute("""
-                    SELECT * FROM comment
+                      SELECT comment.id,
+                     comment.question_id,
+                     comment.answer_id,
+                     comment.message,
+                     comment.submission_time,
+                     comment.edited_count,
+                     users.user_name
+                     FROM comment
+                     INNER JOIN users ON comment.user_id = users.id
                     WHERE answer_id IS NOT NULL
                     """, )
     answer_comments = cursor.fetchall()
@@ -211,41 +246,44 @@ def get_answer_comment(cursor):
 
 
 @connection.connection_handler
-def add_new_comment_for_answer(cursor, answer_id, message):
+def add_new_comment_for_answer(cursor, answer_id, message, user_id):
     cursor.execute("""
-                    INSERT INTO comment (answer_id, message, submission_time, edited_count) 
-                    VALUES (%(answer_id)s, %(message)s, NOW(), 0)
+                    INSERT INTO comment (answer_id, message, submission_time, edited_count, user_id) 
+                    VALUES (%(answer_id)s, %(message)s, NOW(), 0, %(user_id)s)
                     RETURNING id;
                    """, {
         "answer_id": answer_id,
         "message": message,
+        "user_id": user_id,
     })
     answer_comment = cursor.fetchall()
     return answer_comment
 
 
 @connection.connection_handler
-def add_new_comment_for_question(cursor, question_id, message):
+def add_new_comment_for_question(cursor, question_id, message, user_id):
     cursor.execute("""
-                    INSERT INTO comment (question_id, message, submission_time, edited_count) 
-                    VALUES (%(question_id)s, %(message)s, NOW(), 0);
+                    INSERT INTO comment (question_id, message, submission_time, edited_count, user_id) 
+                    VALUES (%(question_id)s, %(message)s, NOW(), 0, %(user_id)s);
                    """, {
         "question_id": question_id,
         "message": message,
+        "user_id": user_id,
     })
 
 
 @connection.connection_handler
-def add_new_answer(cursor, vote_number, question_id, message):
+def add_new_answer(cursor, vote_number, question_id, message, user_id):
     cursor.execute("""
-                    INSERT INTO answer (submission_time, vote_number, question_id, message)
-                    VALUES (NOW(), %(vote_number)s, %(question_id)s, %(message)s)
+                    INSERT INTO answer (submission_time, vote_number, question_id, message, user_id)
+                    VALUES (NOW(), %(vote_number)s, %(question_id)s, %(message)s, %(user_id)s)
                     RETURNING question_id;
                     """,
                    {
                        "vote_number": vote_number,
                        "question_id": question_id,
                        "message": message,
+                       "user_id": user_id,
                    })
 
 
@@ -365,3 +403,15 @@ def get_user_by_email(cursor, email):
                        "email": email,
                    })
     return cursor.fetchone()['user_name']
+
+
+@connection.connection_handler
+def get_user_id_by_email(cursor, email):
+    cursor.execute("""
+                    SELECT id FROM users
+                    WHERE email = %(email)s;
+                     """,
+                   {
+                       "email": email,
+                   })
+    return cursor.fetchone()['id']
