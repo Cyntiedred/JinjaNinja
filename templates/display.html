@@ -69,9 +69,9 @@
                 </div>
 
             <div class="answer_vote_number">
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up', reputation='up', user = question.user_name) }}"><p><i class="up"></i></p></a>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up', reputation='up', user = answer.user_name) }}"><p><i class="up"></i></p></a>
                 {{ answer.vote_number }}
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down', reputation = 'down', user = question.user_name) }}"><p><i class="down"></i></p></a>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down', reputation = 'down', user = answer.user_name) }}"><p><i class="down"></i></p></a>
             </div>
             <br>
         </div>
