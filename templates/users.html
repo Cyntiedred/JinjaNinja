@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h1>All user</h1>
+
+<table width="100%" border="5">
+    <tr align="center">
+        <th>ID</th>
+        <th>Username</th>
+        <th>E-mail</th>
+        <th>Reputation</th>
+    </tr>
+    {% for data in users_data %}
+        <tr align="center">
+            <td>{{ data.id }}</td>
+            <td>{{ data.user_name }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.reputation }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

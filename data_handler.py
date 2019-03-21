@@ -4,8 +4,8 @@ import connection
 @connection.connection_handler
 def select_all_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question;
-                    """, )
+                    SELECT * FROM question ORDER BY id;
+                   """, )
     questions = cursor.fetchall()
     return questions
 

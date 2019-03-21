@@ -419,6 +419,9 @@ def search_content():
                            script=script,
                            user_name=user_name)
 
+############################### REGISTRATION AND LOGIN STUFF ############################################
+
+
 
 @app.route('/registration/', methods=['GET', 'POST'])
 def registration():
@@ -447,6 +450,7 @@ def login():
         if hashed_pass_from_database:
             verification = password.verify_password(pass1, hashed_pass_from_database)
 
+
             if verification:
                 session['email'] = request.form.get('email')
                 return redirect(url_for('show_five_latest_questions'))
@@ -464,6 +468,13 @@ def login():
 def logout():
     session.pop('email', None)
     return redirect(url_for('show_five_latest_questions'))
+
+
+@app.route('/users')
+def show_all_users():
+    users_data = data_handler.get_all_user_data()
+
+    return render_template('users.html', users_data=users_data)
 
 
 if __name__ == '__main__':
