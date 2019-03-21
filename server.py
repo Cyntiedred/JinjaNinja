@@ -87,6 +87,7 @@ def add_new_comment_question(q_id):
     if 'email' in session:
         script = False
         user_name = data_handler.get_user_by_email(session['email'])
+        user_id = data_handler.get_user_id_by_email(session['email'])
     else:
         script = True
         user_name = None
@@ -95,7 +96,7 @@ def add_new_comment_question(q_id):
         return render_template('question_comment.html', q_id=q_id)
 
     message = request.form.get('message')
-    data_handler.add_new_comment_for_question(q_id, message)
+    data_handler.add_new_comment_for_question(q_id, message, user_id)
     return redirect(url_for('display_question',
                             q_id=q_id,
                             script=script,
@@ -110,6 +111,7 @@ def add_new_comment_answer(a_id):
     if 'email' in session:
         script = False
         user_name = data_handler.get_user_by_email(session['email'])
+        user_id = data_handler.get_user_id_by_email(session['email'])
     else:
         script = True
         user_name = None
@@ -120,7 +122,7 @@ def add_new_comment_answer(a_id):
                                 user_name=user_name)
 
     message = request.form.get('message')
-    data_handler.add_new_comment_for_answer(a_id, message)
+    data_handler.add_new_comment_for_answer(a_id, message, user_id)
     q_id = data_handler.get_question_id_by_answer(a_id)
 
     return redirect(url_for('display_question',
@@ -151,6 +153,7 @@ def add_new_question():
     if 'email' in session:
         script = False
         user_name = data_handler.get_user_by_email(session['email'])
+        user_id = data_handler.get_user_id_by_email(session['email'])
     else:
         script = True
         user_name = None
@@ -159,7 +162,7 @@ def add_new_question():
     view_number = 0
     title = request.form.get('title')
     message = request.form.get('message')
-    data_handler.save_new_question(title, message, view_number, vote_number)
+    data_handler.save_new_question(title, message, view_number, vote_number, user_id)
 
     return redirect(url_for('route_list',
                             script=script,
@@ -173,13 +176,14 @@ def add_new_answer(q_id):
     if 'email' in session:
         script = False
         user_name = data_handler.get_user_by_email(session['email'])
+        user_id = data_handler.get_user_id_by_email(session['email'])
     else:
         script = True
         user_name = None
 
     vote_number = 0
     message = request.form.get('message')
-    data_handler.add_new_answer(vote_number, q_id, message)
+    data_handler.add_new_answer(vote_number, q_id, message, user_id)
     return redirect(url_for('display_question',
                             q_id=q_id,
                             script=script,
