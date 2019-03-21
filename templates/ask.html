@@ -3,7 +3,7 @@
 {% block content %}
 
     <h1>Add new Question</h1>
-    <form action="{{ url_for('add_new_question') }}"
+    <form class="registration_form" action="{{ url_for('add_new_question') }}"
           method=post enctype=multipart/form-data>
         <p>
             <label for="title">Story Title:</label><br>
@@ -14,8 +14,8 @@
             <textarea name="message" id="message" cols="40" rows="4"></textarea>
         </p>
         <p>
-            <input type=file name=image id="image">
-            <input type=submit value="ask a question">
+            <input class="ask_btn1" type=file name=image id="image">
+            <input class="ask_btn2" type=submit value="ask a question">
         </p>
     </form>
 

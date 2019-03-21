@@ -2,111 +2,94 @@
 
 {% block content %}
 
+
 <h1>Question {{ id }}</h1>
-<form action="/">
-    <input type="submit" value="Go back to the main menu"/>
-    <div class="gap-15"></div>
-    <br>
-</form>
-<table width="100%" border="5">
-    <tr align="center">
-        <th>ID</th>
-        <th>Submission Time</th>
-        <th>View Number</th>
-        <th>Vote Number</th>
-        <th>Title</th>
-        <th>Message</th>
-        <th>Image</th>
-    </tr>
+
     {% for question in question_by_id %}
-        <tr align="center">
-            <td>{{ question.id }}</td>
-            <td>{{ question.submission_time }}</td>
-            <td>{{ question.view_number }}</td>
-            <td>
-                {{ question.vote_number }}<br>
-                <a href="{{ url_for('vote', q_id=question.id, vote='up') }}"><p><i class="up"></i></p></a>
-                <a href="{{ url_for('vote', q_id=question.id, vote='down') }}"><p><i class="down"></i></p></a>
 
-            </td>
-            <td>{{ question.title }}</td>
-            <td>{{ question.message }}</td>
-            <td><img src="{{ question.image }}" alt="Question Picture" width="100" height="100"></td>
-        </tr>
+    <div class="question_title">{{ question.title }}</div><br>
+    <div class="question_submission_time">{{ question.submission_time }}</div><br>
+    <p class ="question_message">{{ question.message }}</p>
+    <div class ="question_vote_number">
+     <a href="{{ url_for('vote', q_id=question.id, vote='up') }}"><p><i class="up"></i></p></a>
+        {{ question.vote_number }}
+     <a href="{{ url_for('vote', q_id=question.id, vote='down') }}"><p><i class="down"></i></p></a>
+    </div><br>
+
     {% endfor %}
-</table>
 
-<h1 align="left"> Question Comments: </h1>
-<table width="50%" border="3" align="right">
-    <tr>
-        <th width="200px">Submission Time</th>
-        <th>Comment</th>
-        <th>Edited Count</th>
-    </tr>
+
     {% for comment in question_comments %}
-        <tr align="center">
-            <td>{{ comment['submission_time'] }}</td>
-            <td><b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b><br>
-            <b><a href = "{{ url_for('delete_question_comment', c_id = comment.id ) }}">delete</a></b></td>
-            <td>It has been edited {{ comment.edited_count }} times.</td>
-        </tr>
-    {% endfor %}
-</table>
-<form action="{{ url_for('add_new_comment_question', q_id=q_id) }}"
-      method=get>
-    <br>
-    <p>
-        <input align="center" type=submit value="add a new comment">
-    </p>
-</form>
 
-<h1 align="center">Answers: </h1>
-<table width="100%" border="5" align="left">
-    <tr>
-        <th width="200px"><h4>Submission Time</h4></th>
-        <th><h2> Answer </h2></th>
-        <th width="200px"><h4>Vote Number</h4></th>
-    </tr>
+<div class="question_comment_css">
+   <br><h4 class= "question_comment" align="center"> Question Comments: </h4>
+   <div class ="comment_submission_time">{{ comment['submission_time'] }}</div>
+    <p class ="comment_message">
+    <b><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a></b><br>
+     </p>
+    <div class ="comment_edited">It has been edited {{ comment.edited_count }} times.</div>
+    <div class="comment_delete">
+    <b><a href = "{{ url_for('delete_question_comment', c_id = comment.id ) }}">delete</a></b>
+    </div>
+    </div>
+
+{% endfor %}
+
+
+
     {% for answer in answers %}
-        <tr align="center">
-            <td>{{ answer.submission_time }}</td>
-            <td><a href="{{ url_for('edit_answer', a_id=answer.id) }}">{{ answer.message }}"</a><br>
-                <a href="{{ url_for('add_new_comment_answer', a_id=answer.id) }}">Add new comment</a>
-            </b></td>
-            <td>{{ answer.vote_number }}<br>
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up') }}"><p><i class="up"></i></p></a>
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down') }}"><p><i class="down"></i></p></a>
-        </tr>
-    {% endfor %}
-</table>
 
-<form action="{{ url_for('add_new_answer', q_id=q_id) }}" method="post">
+<div class="answer_css">
+    <h1 align="center">Answers: </h1>
+    <div class="answer_submission_time">{{ answer.submission_time }}</div><br>
+    <div class ="answer_message">
+        <a href="{{ url_for('edit_answer', a_id=answer.id) }}">{{ answer.message }}"</a>
+
+    <div class ="answer_comment_message">
+        {% for comment in answer_comments %}
+        <a href="{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}"</a>
+        {% endfor %}
+    </div>
+
+    </div>
+    <div class ="answer_vote_number">
+     <a href="{{url_for('vote_for_answer', a_id=answer.id, vote='up') }}"><p><i class="up"></i></p></a>
+        {{ answer.vote_number }}
+     <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down') }}"><p><i class="down"></i></p></a>
+    </div><br>
+</div>
+
+    {% endfor %}
+
+<form class="new_answer" action="{{ url_for('add_new_answer', q_id=q_id) }}" method="post">
     <p>
-        <label for="message">Enter your answer here:</label>
+        <label class="message" for="message">Enter your answer here:</label>
         <br>
         <textarea name="message" id="message" cols="100" rows="5" required></textarea>
     </p>
-    <button type="submit">Submit</button>
+    <button class="btn-submit" type="submit">Submit</button>
 </form>
 
-<h1 align="center"> Answer Comments: </h1>
-<table width="50%" border="3" align="center">
-    <tr>
-        <th width="200px">Submission Time</th>
-        <th>Comment</th>
-        <th>Edited Count</th>
+
+
+
+
     {% for comment in answer_comments %}
-        <tr align="center">
-            <td>{{ comment['submission_time'] }}</td>
-            <td><a href = "{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}</a><br>
-            <b><a href = "{{ url_for('delete_answer_comment', c_id = comment.id ) }}">delete</a></b></td>
-            <td>It has been edited {{ comment.edited_count }} times.</td>
-        </tr>
+
+
+    <div class="answer_comment_css">
+    <h2 align="center"> Answer Comments: </h2>
+    <div class="answer_submission_time">{{ comment['submission_time'] }}</div><br>
+    <div class ="answer_message">
+        <a href="{{ url_for('edit_comment', c_id = comment.id ) }}">{{ comment['message'] }}"</a>
+    </div>
+    <div class ="comment_edited">It has been edited {{ comment.edited_count }} times.</div>
+    <div class="comment_delete">
+    <b><a href = "{{ url_for('delete_answer_comment', c_id = comment.id ) }}">delete</a></b>
+    </div><br>
+    </div>
     {% endfor %}
-</table>
-<form action="{{ url_for('add_new_comment_answer', a_id=a_id) }}"
-      method=get>
-    <br>
-</form>
+
+
 
 {% endblock %}

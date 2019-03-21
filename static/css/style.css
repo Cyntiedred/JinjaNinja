@@ -210,6 +210,105 @@ input[type=email], input[type=password] {
   width: 60%;
 }
 
-.button:hover {
+.button:hover, .ask_btn2 {
   opacity: 0.8;
+}
+
+.ask_btn2{
+  background-color: #2290ab;
+  color: white;
+  padding: 16px 20px;
+  margin: 10px 0;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  width: 50%;
+}
+
+.ask_btn1{
+  margin: 10px 0;
+  width: 50%;
+}
+.question_title{
+    text-align: center;
+    font-size: 40px;
+}
+
+.question_submission_time{
+    text-align: center;
+}
+
+.question_message{
+  width: 80%;
+  margin-top: 4%;
+  margin-right: 10%;
+  float:right;
+  text-align: center;
+}
+
+.question_vote_number{
+  width: 50px;
+  padding-left: 3%;
+  font-size: 28px;
+  float:left;
+}
+
+.question_comment_css{
+    padding:10px;
+    width: 32%;
+    float:right;
+}
+
+
+.question_comment{
+    text-align: center;
+
+}
+
+
+.comment_submission_time{
+    float:left;
+    padding:20px;
+}
+
+.answer_css{
+    float:left;
+    width: 100%;
+    text-align: center;
+}
+
+.answer_message{
+    font-size: 28px;
+}
+
+.answer_vote_number{
+  width: 20px;
+  margin-left: 25%;
+  margin-top: -5%;
+  font-size: 18px;
+  float:left;
+}
+
+.message{
+  padding: 20px;
+  font-size: 20px;
+}
+.new_answer{
+  float:left;
+  width: 80%;
+  margin-left: 25%;
+  margin-bottom: 2%;
+}
+
+.answer_comment_css{
+  float:left;
+  text-align: center;
+  margin-left: 10%;
+  width: 80%;
+}
+
+.answer_css-answer_comment_message{
+  float:right;
+  font-size: 16px;
+  margin-right: 20%;
 }
