@@ -241,11 +241,11 @@ input[type=email], input[type=password] {
    margin-right: 5%;
 }
 
-.question_submission_time, .user{
+.question_submission_time{
     text-align: center;
 }
 
-.user{
+.display_css .user{
     text-align: center;
     width: 100%;
 }
