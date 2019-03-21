@@ -195,8 +195,8 @@ def add_new_answer(q_id):
 ##### VOTE QUESTION UP OR DOWN
 
 
-@app.route('/question/<int:q_id>/vote-<string:vote>')
-def vote(q_id, vote):
+@app.route('/question/<int:q_id>/vote-<string:vote>/reputation-<string:reputation>/user-<string:user>')
+def vote(q_id, vote, reputation, user):
     if 'email' in session:
         script = False
         user_name = data_handler.get_user_by_email(session['email'])
@@ -204,7 +204,7 @@ def vote(q_id, vote):
         script = True
         user_name = None
 
-    data_handler.vote_for_questions(q_id, 1 if vote == 'up' else -1)
+    data_handler.vote_for_questions(q_id, 1 if vote == 'up' else -1, 5 if reputation == 'up' else -2, user )
     return redirect(url_for('display_question',
                             q_id=q_id,
                             script=script,
@@ -213,8 +213,8 @@ def vote(q_id, vote):
 
 ##### VOTE ANSWER UP OR DOWN
 
-@app.route('/answer/<int:a_id>/vote-<string:vote>')
-def vote_for_answer(a_id, vote):
+@app.route('/answer/<int:a_id>/vote-<string:vote>/reputation-<string:reputation>/user-<string:user>')
+def vote_for_answer(a_id, vote, reputation, user):
     if 'email' in session:
         script = False
         user_name = data_handler.get_user_by_email(session['email'])
@@ -222,7 +222,7 @@ def vote_for_answer(a_id, vote):
         script = True
         user_name = None
 
-    data_handler.vote_for_answers(a_id, 1 if vote == 'up' else -1)
+    data_handler.vote_for_answers(a_id, 1 if vote == 'up' else -1, 10 if reputation == 'up' else -2, user )
     q_id = data_handler.get_question_id_by_answer(a_id)
     return redirect(url_for('display_question',
                             q_id=q_id,

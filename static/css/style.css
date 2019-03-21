@@ -235,6 +235,15 @@ input[type=email], input[type=password] {
 
 }
 
+.display_css{
+    width: 60%;
+    padding-top: 2%;
+    margin-top: 2%;
+    background-color: #cccccc;
+    margin-left: 20%;
+
+}
+
 .Question{
    text-align: center;
    font-size: 40px;
@@ -245,14 +254,14 @@ input[type=email], input[type=password] {
     text-align: center;
 }
 
-.display_css .user{
+.user{
     text-align: center;
-    width: 100%;
 }
 
 .question_message{
   width: 80%;
-  margin-top: 4%;
+  padding-top: 4%;
+  padding-bottom: 4%;
   margin-right: 10%;
   float:right;
   text-align: center;
@@ -265,16 +274,16 @@ input[type=email], input[type=password] {
   float:left;
 }
 
+/*
+
+
 .display_css .question_comment_css{
     padding:10px;
     margin-left: 10%;
     width: 60%;
 }
 
-.question_comment{
-    text-align: center;
 
-}
 
 .display_css .comment_delete{
     margin-left: 50%;
@@ -344,3 +353,5 @@ input[type=email], input[type=password] {
    margin-right: 5%;
    color: black;
 }
+
+*/
