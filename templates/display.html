@@ -11,9 +11,9 @@
         <p class="question_message">{{ question.message }}</p>
         <div class="user">{{ question.user_name }}</div><br>
         <div class="question_vote_number">
-            <a href="{{ url_for('vote', q_id=question.id, vote='up') }}"><p><i class="up"></i></p></a>
+            <a href="{{ url_for('vote', q_id=question.id, vote='up', reputation = 'up', user = question.user_name) }}"><p><i class="up"></i></p></a>
             {{ question.vote_number }}
-            <a href="{{ url_for('vote', q_id=question.id, vote='down') }}"><p><i class="down"></i></p></a>
+            <a href="{{ url_for('vote', q_id=question.id, vote='down', reputation = 'down', user = question.user_name) }}"><p><i class="down"></i></p></a>
             <br>
         </div>
     {% endfor %}
@@ -58,9 +58,9 @@
 
             </div>
             <div class="answer_vote_number">
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up') }}"><p><i class="up"></i></p></a>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='up', reputation='up', user = question.user_name) }}"><p><i class="up"></i></p></a>
                 {{ answer.vote_number }}
-                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down') }}"><p><i class="down"></i></p></a>
+                <a href="{{ url_for('vote_for_answer', a_id=answer.id, vote='down', reputation = 'down', user = question.user_name) }}"><p><i class="down"></i></p></a>
             </div>
             <br>
         </div>

@@ -97,23 +97,36 @@ def update_view_number(cursor, q_id):
 
 
 @connection.connection_handler
-def vote_for_questions(cursor, q_id, vote):
+def vote_for_questions(cursor, q_id, vote, reputation, user):
     cursor.execute("""
                     UPDATE question
                     SET vote_number = vote_number+%(vote)s
                     WHERE id = %(q_id)s;
                    """,
-                   {'q_id': q_id, 'vote': vote})
+                   {'q_id': q_id, 'vote': vote,})
+    cursor.execute(
+                   """
+                    UPDATE users
+                    SET reputation = reputation+%(reputation)s
+                    WHERE user_name = %(user)s;             
+                   """,
+                   {'reputation': reputation, 'user': user})
 
 
 @connection.connection_handler
-def vote_for_answers(cursor, a_id, vote):
+def vote_for_answers(cursor, a_id, vote, reputation, user):
     cursor.execute("""
                     UPDATE answer
                     SET vote_number = vote_number+%(vote)s
                     WHERE id = %(a_id)s;
                    """,
                    {'a_id': a_id, 'vote': vote})
+    cursor.execute("""
+                    UPDATE users
+                    SET reputation = reputation+%(reputation)s
+                    WHERE user_name = %(user)s;             
+                   """,
+                   {'reputation': reputation, 'user': user})
 
 
 @connection.connection_handler
