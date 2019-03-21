@@ -14,7 +14,7 @@
     {% for data in users_data %}
         <tr align="center">
             <td>{{ data.id }}</td>
-            <td>{{ data.user_name }}</td>
+            <td><a href="{{ url_for('show_all_activities_by_user', user_id=data.id) }}">{{ data.user_name }}</a></td>
             <td>{{ data.email }}</td>
             <td>{{ data.reputation }}</td>
         </tr>

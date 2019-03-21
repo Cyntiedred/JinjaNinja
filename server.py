@@ -14,7 +14,7 @@ def show_five_latest_questions():
         user_name = data_handler.get_user_by_email(session['email'])
     else:
         anti_popup = True
-        user_name=None
+        user_name = None
 
     latest_questions = data_handler.select_five_latest_questions()
     answer_comments = data_handler.get_answer_comment()
@@ -35,8 +35,7 @@ def route_list():
         user_name = data_handler.get_user_by_email(session['email'])
     else:
         script = True
-        user_name=None
-
+        user_name = None
 
     questions = data_handler.select_all_questions()
 
@@ -118,8 +117,8 @@ def add_new_comment_answer(a_id):
 
     if request.method == 'GET':
         return render_template('answer_comment.html',
-                                a_id=a_id,
-                                user_name=user_name)
+                               a_id=a_id,
+                               user_name=user_name)
 
     message = request.form.get('message')
     data_handler.add_new_comment_for_answer(a_id, message, user_id)
@@ -419,8 +418,8 @@ def search_content():
                            script=script,
                            user_name=user_name)
 
-############################### REGISTRATION AND LOGIN STUFF ############################################
 
+############################### REGISTRATION AND LOGIN STUFF ############################################
 
 
 @app.route('/registration/', methods=['GET', 'POST'])
@@ -450,7 +449,6 @@ def login():
         if hashed_pass_from_database:
             verification = password.verify_password(pass1, hashed_pass_from_database)
 
-
             if verification:
                 session['email'] = request.form.get('email')
                 return redirect(url_for('show_five_latest_questions'))
@@ -473,9 +471,39 @@ def logout():
 
 @app.route('/users')
 def show_all_users():
+    if 'email' in session:
+        script = False
+        user_name = data_handler.get_user_by_email(session['email'])
+    else:
+        script = True
+        user_name = None
     users_data = data_handler.get_all_user_data()
 
-    return render_template('users.html', users_data=users_data)
+    return render_template('users.html',
+                           users_data=users_data,
+                           script=script,
+                           user_name=user_name)
+
+
+@app.route('/user/<int:user_id>')
+def show_all_activities_by_user(user_id):
+    if 'email' in session:
+        script = False
+        user_name = data_handler.get_user_by_email(session['email'])
+    else:
+        script = True
+        user_name = None
+    user_data = data_handler.get_all_user_data_by_user_id(user_id)
+    all_questions=data_handler.get_all_questions_by_user_id(user_id)
+    all_answers=data_handler.get_all_answers_by_user_id(user_id)
+    all_comments=data_handler.get_all_comments_by_user_id(user_id)
+    return render_template('all_user_activities.html',
+                           user_data=user_data,
+                           all_questions=all_questions,
+                           all_answers=all_answers,
+                           all_comments=all_comments,
+                           script=script,
+                           user_name=user_name)
 
 
 if __name__ == '__main__':

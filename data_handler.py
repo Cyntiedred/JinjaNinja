@@ -182,7 +182,7 @@ def save_new_question(cursor, title, message, view_number, vote_number, user_id)
         "message": message,
         "view_number": view_number,
         "vote_number": vote_number,
-        "user_id":user_id,
+        "user_id": user_id,
     })
     new_question = cursor.fetchall()
     return new_question
@@ -421,6 +421,54 @@ def get_user_id_by_email(cursor, email):
 def get_all_user_data(cursor):
     cursor.execute("""
                     SELECT * FROM users
-                     """,)
+                     """, )
     users_data = cursor.fetchall()
     return users_data
+
+
+@connection.connection_handler
+def get_all_user_data_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT * FROM users
+                    WHERE users.id=%(user_id)s
+                    """,
+                   {
+                       'user_id': user_id
+                   })
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_all_questions_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE user_id=%(user_id)s
+                    """,
+                   {
+                       'user_id': user_id
+                   })
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_all_answers_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE user_id=%(user_id)s
+                    """,
+                   {
+                       'user_id': user_id
+                   })
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def get_all_comments_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT * FROM comment
+                    WHERE user_id=%(user_id)s
+                    """,
+                   {
+                       'user_id': user_id
+                   })
+    return cursor.fetchall()
