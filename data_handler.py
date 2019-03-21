@@ -27,13 +27,13 @@ def select_all_answers_by_id(cursor, q_id):
                     SELECT 
                     answer.id,
                     answer.submission_time,
-                     answer.vote_number,
-                     answer.question_id,
-                     answer.message,
-                     answer.image,
-                     users.user_name
-                     FROM answer 
-                     INNER JOIN users ON answer.user_id = users.id
+                    answer.vote_number,
+                    answer.question_id,
+                    answer.message,
+                    answer.image,
+                    users.user_name
+                    FROM answer 
+                    INNER JOIN users ON answer.user_id = users.id
                     WHERE question_id = %(q_id)s
                     ORDER BY vote_number DESC,
                             submission_time DESC;
@@ -103,14 +103,14 @@ def vote_for_questions(cursor, q_id, vote, reputation, user):
                     SET vote_number = vote_number+%(vote)s
                     WHERE id = %(q_id)s;
                    """,
-                   {'q_id': q_id, 'vote': vote,})
+                   {'q_id': q_id, 'vote': vote, })
     cursor.execute(
-                   """
-                    UPDATE users
-                    SET reputation = reputation+%(reputation)s
-                    WHERE user_name = %(user)s;             
-                   """,
-                   {'reputation': reputation, 'user': user})
+        """
+         UPDATE users
+         SET reputation = reputation+%(reputation)s
+         WHERE user_name = %(user)s;             
+        """,
+        {'reputation': reputation, 'user': user})
 
 
 @connection.connection_handler
